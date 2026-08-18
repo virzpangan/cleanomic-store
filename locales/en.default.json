@@ -294,7 +294,7 @@
     },
     "product": {
       "stock_label": "{{ count }} in stock",
-      "sold_out": "Sold Out - Coming Soon",
+      "sold_out": "Sold Out",
       "unavailable": "Unavailable",
       "quantity": "Quantity",
       "add_to_cart": "Add to cart",

@@ -28,7 +28,7 @@
                                   <img src="{{ product.featured_image | img_url: '400x400' }}"
                                     alt="{{product.featured_image.alt}}">
                                 </a>
-                                <a class="btn-shop" href="{{ product.url }}">{% if product.available %}Shop Now{% else %}Sold Out - Coming Soon{% endif %}</a>
+                                <a class="btn-shop" href="{{ product.url }}">Shop Now</a>
                             </figure>
                             <div style="display:flex;align-items:center;" class="ruk_rating_snippet" data-sku="{{ product.handle }};{{ product.variants | map: 'sku' | join: ';' }};{{ product.variants | map: 'id' | join: ';' }}"></div>
                             <h5>{{ product.title }}</h5>

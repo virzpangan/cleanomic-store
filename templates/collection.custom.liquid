@@ -32,26 +32,19 @@
                               <img src="{{ product.featured_image | img_url: '400x' }}"
                                 alt="{{ product.featured_image.alt }}">
                             </a>
-                            <a class="btn-shop" href="{{ product.url }}">{% if product.available %}Shop Now{% else %}Sold Out - Coming Soon{% endif %}</a>
+                            <a class="btn-shop" href="{{ product.url }}">Shop Now</a>
                         </figure>
                         <div style="display:none;" class="yotpo bottomLine" data-yotpo-product-id="{{ product.id }}">
                         </div>
                         <h5>{{product.title }}</h5>
                         <span>{% if product.id == 7881714565358 %}{{ bathroomkit_price }} from <span
                                 style="text-decoration: line-through;">{{ bathroomkit_comprice }}</span>{% else
-                            %}
-                             {% assign first_variant = product.variants.first %}
-
-                                {% if first_variant.compare_at_price > first_variant.price %}
-                                {{ first_variant.price | money }}
-                                from
-                                <span style="text-decoration: line-through;">
-                                    {{ first_variant.compare_at_price | money }}
-                                </span>
-                                {% else %}
-                                {{ first_variant.price | money }}
-                                {% endif %}
-                        {% endif %}</span>
+                            %}{% if product.compare_at_price > product.price_min %}{{ product.price_min | money }}
+                            from
+                            <span style="text-decoration: line-through;">{{ product.compare_at_price | money
+                                }}</span>{%
+                            else %}{{
+                            product.price | money }}{% endif %}{% endif %}</span>
                     </div>
                 </div>
                 {% endfor %}

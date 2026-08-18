@@ -1,0 +1,32 @@
+<script>
+window.addEventListener("DOMContentLoaded", () => {
+   const btn = document.querySelector('#AddToCart-7522301051118');
+   btn.addEventListener("click",()=>{
+    addItemToCartGift();
+   });
+});
+
+
+function addItemToCartGift() {
+      data = {
+    
+            "id": 42289012441326,
+            "quantity": 1,      
+    
+  }
+     
+    jQuery.ajax({
+      type: 'POST',
+      url: '/cart/add.js',
+      data: data,
+      dataType: 'json',
+      success: function() { 
+        window.location.reload();
+      }
+
+    
+  }
+ 
+
+
+</script>

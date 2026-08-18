@@ -1,0 +1,23 @@
+{% assign eco_details = meta_bundle.eco_details %}
+{% if eco_details != blank%}
+<div class="sc-bundle-features">
+    <div class="container-fluid">
+        <div class="row">
+            <div style="background-image: url({{eco_details.image}});" class="col-md-6">
+                <img src="{{eco_details.image}}" alt="">
+            </div>
+            <div class="col-md-6">
+                <div class="wrapper">
+                    <h2>{{eco_details.title}}</h2>
+                    <p>{{eco_details.description}}</p>
+                    <ul>
+                        {% for list in eco_details.list %}
+                        <li>{{list}}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}

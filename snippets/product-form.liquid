@@ -1,0 +1,132 @@
+{% capture form_id %}AddToCartForm-{{ section_id }}{% endcapture %}
+{% form 'product', product, data-productid: product.id, id: form_id, class: 'product-single__form' %}
+
+  {% unless product.options.size == 1 and product.variants[0].title == 'Default Title' %}
+    {% for option in product.options_with_values %}
+      {% if settings.variant_type == 'button' %}
+        {% include 'variant-button', section_id: section_id, option_drop: option %}
+      {% else %}
+        {% include 'variant-dropdown', section_id: section_id %}
+      {% endif %}
+    {% endfor %}
+  {% endunless %}
+
+
+  <select name="id" data-productid="{{ product.id }}" id="ProductSelect-{{ section_id }}" class="product-single__variants no-js">
+    {% for variant in product.variants %}
+      {% if variant.available %}
+        <option {% if variant == product.selected_or_first_available_variant %}
+          selected="selected" {% endif %}
+          value="{{ variant.id }}">
+          {{ variant.title }} - {{ variant.price | money_with_currency }}
+        </option>
+      {% else %}
+        <option disabled="disabled">
+          {{ variant.title }} - {{ 'products.product.sold_out' | t }}
+        </option>
+      {% endif %}
+    {% endfor %}
+  </select>
+<p style="display:none;margin-bottom:10px;" class="msg-variant-1"><strong>Ocean Breeze: </strong> A breathtaking fragrance that will have your clothes smelling amazing all day long.</p>
+<p style="display:none;margin-bottom:10px;" class="msg-variant-2"><strong>Unscented: </strong>For those with more sensitive skin that may be irritated or don’t like their clothes to have a scent.</p>
+
+  {% if settings.quantity_enable %}
+    <div class="product__quantity product__quantity--{{ settings.variant_type }} js-qty">
+      <label for="Quantity-{{ section_id }}">{{ 'products.product.quantity' | t }}</label>
+      <input type="number" hidden="hidden" id="Quantity-{{ section_id }}" name="quantity" value="1" min="1" class="js-qty__fallback">
+    </div>
+  {% endif %}
+
+
+  {%- assign enable_dynamic_buttons = false -%}
+  {% if settings.enable_payment_button and template != 'product.preorder' %}
+    {%- assign enable_dynamic_buttons = true -%}
+  {% endif %}
+
+
+
+<p style="display:none;" class="cn-made"><img src="{{ 'us-made.png' | asset_img_url: '64x' }}"/><span>Directly Ships From Our US Warehouse in 3-8 Days</span></p>
+<hr class="hr--medium">
+<!--- Recharge --->
+
+<!--- Recharge --->
+
+  {% if enable_dynamic_buttons %}
+    <div class="payment-buttons">
+      
+  {% endif %}
+
+  
+    <button
+      {% if product.empty? %}type="button"{% else %}type="submit"{% endif %}
+      name="add"
+      id="AddToCart-{{ section_id }}"
+      class="{% if enable_dynamic_buttons %}btn--tertiary{% else %}btn{% endif %} btn--full btn--no-animate add-to-cart"
+      {% unless current_variant.available %} disabled="disabled"{% endunless %}>
+      <span style="background-image: url('https://cdn.shopify.com/s/files/1/0062/5793/4454/files/cart-2x.png');width: 35px;height: 35px;display: block;position: absolute;top: 6px;left: 5px;background-size: 35px 35px;"></span>
+      <span id="AddToCartText-{{ section_id }}">
+        {% if current_variant.available %}
+          {% if template == 'product.preorder' %}
+            {{ 'products.product.preorder' | t }}
+          {% else %}
+        	{% if product.id == 7515189903598 %}
+        		GET YOUR EARTHWASH FOR $0.00 + $7.99 SHIPPING
+        	{% else %}
+            	{{ 'products.product.add_to_cart' | t }}
+        	{% endif %}
+          {% endif %}
+        {% else %}
+          {{ 'products.product.sold_out' | t }}
+        {% endif %}
+      </span>
+    </button>
+
+      
+    {% if enable_dynamic_buttons %}
+
+      {{ form | payment_button }}
+
+    {% endif %}
+
+  {% if enable_dynamic_buttons %}
+    </div>
+  {% endif %}
+
+
+    <div id="VariantsJson-{{ section_id }}" class="hide" aria-hidden="true">
+    {{ product.variants | json }}
+  </div>
+
+{% if product.id == 4613762318423 %}
+<ul class="cn-sg">
+    <li><img src="{{ '30days.png' | asset_img_url: 'master' }}" alt=""></li>
+    <li style="padding-left:10px;">
+        <h5>30 DAY SATISFACTION GUARANTEE</h5>
+        <p>If you installed this and you don't feel fully clean after doing your business, then just contact us within 30 days.</p>
+    </li>
+</ul>
+{% endif %}
+<p style="text-align: center;margin-bottom:0px;margin-top:25px;">
+			<img class="ccdisplay" src="https://cdn.shopify.com/s/files/1/0062/5793/4454/files/cc-visa-2x.png" alt="">
+              <img class="ccdisplay" src="https://cdn.shopify.com/s/files/1/0062/5793/4454/files/cc-american-2x.png">
+              <img class="ccdisplay" src="https://cdn.shopify.com/s/files/1/0062/5793/4454/files/cc-discover-2x.png">
+              <img class="ccdisplay" src="https://cdn.shopify.com/s/files/1/0062/5793/4454/files/cc-mastercard-2x.png">
+              <img class="ccdisplay" src="https://cdn.shopify.com/s/files/1/0062/5793/4454/files/paypal.png">
+			</p>
+            <p style="text-align: center;margin-bottom:0px;"><img style="" src="https://cdn.shopify.com/s/files/1/0062/5793/4454/files/trustlogo.png?17022166155022414793" alt=""><br><div style="font-size:13px;font-weight:400;text-align:center;"><span style="width: 15px;height: 15px;fill: #1d7f3a;display: inline-block;position: relative;margin-right: 5px;top: 2px;"><!--?xml version="1.0" encoding="iso-8859-1"?-->
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+
+<svg version="1.1" id="Capa_1___nWyj9WTt" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 401.998 401.998" style="enable-background:new 0 0 401.998 401.998;" xml:space="preserve">
+	<path d="M357.45,190.721c-5.331-5.33-11.8-7.993-19.417-7.993h-9.131v-54.821c0-35.022-12.559-65.093-37.685-90.218
+		C266.093,12.563,236.025,0,200.998,0c-35.026,0-65.1,12.563-90.222,37.688C85.65,62.814,73.091,92.884,73.091,127.907v54.821
+		h-9.135c-7.611,0-14.084,2.663-19.414,7.993c-5.33,5.326-7.994,11.799-7.994,19.417V374.59c0,7.611,2.665,14.086,7.994,19.417
+		c5.33,5.325,11.803,7.991,19.414,7.991H338.04c7.617,0,14.085-2.663,19.417-7.991c5.325-5.331,7.994-11.806,7.994-19.417V210.135
+		C365.455,202.523,362.782,196.051,357.45,190.721z M274.087,182.728H127.909v-54.821c0-20.175,7.139-37.402,21.414-51.675
+		c14.277-14.275,31.501-21.411,51.678-21.411c20.179,0,37.399,7.135,51.677,21.411c14.271,14.272,21.409,31.5,21.409,51.675V182.728
+		z"></path>
+</svg>
+</span>Secure 256-bit SSL encryption</div></p>
+
+
+
+{% endform %}

@@ -1,0 +1,90 @@
+{{ 'custom-style.css' | asset_url | stylesheet_tag }}
+{% assign custom_css =  product.metafields.custom.custom_style.value %}
+<style>
+  {{ custom_css }}
+</style>
+{% assign meta_default =  product.metafields.custom.regular_product_content.value %}
+{% assign meta_bundle =  product.metafields.custom.bundle_product_kit_content.value %}
+{% include 'product-custom-bundle-template',
+  description_style: section.settings.description_style,
+  image_container_width: section.settings.image_size,
+  section_id: product.id,
+  social: section.settings.social_enable,
+  thumbnail_position: section.settings.thumbnail_position
+%}
+{% include 'sc-bundle-products' %}
+{% include 'sc-box-content' %}
+{% include 'sc-bundle-features' %}
+{% include 'sc-satisfaction' %}
+{% include 'sc-about' %}
+{% include 'sc-recommended' %}
+{% include 'sc-faq' %}
+
+
+{% schema %}
+  {
+    "name": "Product pages",
+    "settings": [
+      {
+        "type": "select",
+        "id": "image_size",
+        "label": "Image size",
+        "default": "medium",
+        "options": [
+          {
+            "value": "small",
+            "label": "Small"
+          },
+          {
+            "value": "medium",
+            "label": "Medium"
+          },
+          {
+            "value": "large",
+            "label": "Large"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "thumbnail_position",
+        "label": "Thumbnail position",
+        "default": "below",
+        "options": [
+          {
+            "value": "beside",
+            "label": "Next to image"
+          },
+          {
+            "value": "below",
+            "label": "Below image"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "description_style",
+        "label": "Description position",
+        "default": "default",
+        "options": [
+          {
+            "value": "default",
+            "label": "Next to images"
+          },
+          {
+            "value": "full",
+            "label": "Below images"
+          }
+        ]
+      },
+      {
+        "type": "checkbox",
+        "id": "social_enable",
+        "label": "Enable social sharing",
+        "default": true
+      }
+    ]
+  }
+{% endschema %}
+
+

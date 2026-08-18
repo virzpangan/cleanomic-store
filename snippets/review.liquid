@@ -1,0 +1,40 @@
+{{ 'slick-theme.css' | asset_url | stylesheet_tag }}
+<div class="sc-reviews">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h5>WHAT PEOPLE ARE SAYING</h5>
+                <div class="review-wrapper">
+                    <div>
+                        <p class="review-quote">“it’s so easy and affordable to
+                            stay stocked on high
+                            quality products that work, smell great, and most importantly are healthy.”</p>
+                        <span class="review-author">HARRY C.</span>
+                    </div>
+                    <div>
+                        <p class="review-quote">“Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                            tempor incididunt ut labore et dolore magna aliqua.”</p>
+                        <span class="review-author">HARRY C.</span>
+                    </div>
+                    <div>
+                        <p class="review-quote">“it’s so easy and affordable to
+                            stay stocked on high
+                            quality products that work, smell great, and most importantly are healthy.”</p>
+                        <span class="review-author">HARRY C.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
+<script>
+    $(document).on('ready', function () {
+        $('.review-wrapper').slick({
+            dots: true,
+            autoplay: true,
+            autoplaySpeed: 5000,
+            fade: true,
+        });
+    });
+</script>

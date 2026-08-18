@@ -1,0 +1,32 @@
+{% if meta_default.reviews %}
+<div class="sc-reviews">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="slider-wrapper">
+                    {% for item in meta_default.reviews.title %}
+                    <div>
+                        <div class="wrapper text-center">
+                            <h5>{{ meta_default.reviews.title[forloop.index0] }}</h5>
+                            <p>{{ meta_default.reviews.quote[forloop.index0] }}</p>
+                            <span>{{ meta_default.reviews.author[forloop.index0] }}</span>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).on('ready', function () {
+        $('.sc-reviews .slider-wrapper').slick({
+            dots: true,
+            arrows: false,
+            autoplay: true,
+            autoplaySpeed: 5000,
+            fade: true,
+        });
+    });
+</script>
+{% endif %}

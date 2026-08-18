@@ -1,0 +1,54 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script>
+    window.addEventListener("DOMContentLoaded", () => {
+        jQuery.ajax({
+            type: "POST",
+            url: '/cart/clear.js',
+            data: '',
+            dataType: 'json',
+            success: function () {
+                const url_string = window.location.href
+                let url = new URL(url_string);
+                const variant_id = url.searchParams.get("variant_id");
+                const subscription = url.searchParams.get("subscription");
+                const selling_plan = url.searchParams.get("selling_plan");
+
+                if (subscription == 'true') {
+
+                   
+                    };
+
+                    data = {
+                        "items": [
+               
+                            {
+                                "id": parseInt(variant_id),
+                                "quantity": 1,
+                                "selling_plan": parseInt(selling_plan)
+                            }
+                            
+                        ]
+                    }
+
+                    jQuery.ajax({
+                        type: 'POST',
+                        url: '/cart/add.js',
+                        data: data,
+                        dataType: 'json',
+
+                        success: function () {
+                            //Get UTM parameters
+      						const utmParam = window.location.search.substring(1);
+                            window.location.href = '/checkout/?'+utmParam;
+
+                        }
+                    });
+                },
+                error: function (XMLHttpRequest, textStatus) {
+                    /* error code */
+                }
+            });
+
+    });
+
+</script>

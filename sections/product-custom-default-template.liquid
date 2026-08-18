@@ -1,0 +1,100 @@
+{{ 'custom-style.css' | asset_url | stylesheet_tag }}
+{% assign custom_css =  product.metafields.custom.custom_style.value %}
+<style>
+  {{ custom_css }}
+</style>
+{% assign meta_default =  product.metafields.custom.regular_product_content.value %}
+{% include 'product-custom-default-template',
+  description_style: section.settings.description_style,
+  image_container_width: section.settings.image_size,
+  section_id: product.id,
+  social: section.settings.social_enable,
+  thumbnail_position: section.settings.thumbnail_position
+%}
+
+
+{% include 'sc-features' %}
+{% include 'sc-details' %}
+{% comment %}
+{% include 'sc-recommended' %}
+{% endcomment %}
+{% include 'sc-reviews' %}
+{% include 'sc-comparison' %}
+{% if product.id == 7911092715758 %}
+  {% include 'product-review-gallery-earthwash' %}
+{% endif %}
+{% include 'sc-satisfaction' %}
+{% include 'sc-reviews-io' %}
+{% include 'sc-faq' %}
+{% if product.id == 7911092715758 %}
+  {% include 'sticky-banner-bottom' %}
+{% endif %}
+
+
+{% schema %}
+  {
+    "name": "Product pages",
+    "settings": [
+      {
+        "type": "select",
+        "id": "image_size",
+        "label": "Image size",
+        "default": "medium",
+        "options": [
+          {
+            "value": "small",
+            "label": "Small"
+          },
+          {
+            "value": "medium",
+            "label": "Medium"
+          },
+          {
+            "value": "large",
+            "label": "Large"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "thumbnail_position",
+        "label": "Thumbnail position",
+        "default": "below",
+        "options": [
+          {
+            "value": "beside",
+            "label": "Next to image"
+          },
+          {
+            "value": "below",
+            "label": "Below image"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "description_style",
+        "label": "Description position",
+        "default": "default",
+        "options": [
+          {
+            "value": "default",
+            "label": "Next to images"
+          },
+          {
+            "value": "full",
+            "label": "Below images"
+          }
+        ]
+      },
+      {
+        "type": "checkbox",
+        "id": "social_enable",
+        "label": "Enable social sharing",
+        "default": true
+      }
+    ]
+  }
+{% endschema %}
+
+

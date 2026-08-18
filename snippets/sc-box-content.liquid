@@ -1,0 +1,23 @@
+{% assign box = meta_bundle.box %}
+{% if box != blank %}
+<div class="sc-box-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <h4>{{box.pre_title}}</h4>
+                <h2>{{box.title}}</h2>
+            </div>
+        </div>
+        <div class="row no-gutter">
+            {% for count in box.box_content.count %}
+            <div class="col">
+                <div class="wrapper">
+                    <span>{{count}}</span>
+                    <span>{{box.box_content.label[forloop.index0]}}</span>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endif %}

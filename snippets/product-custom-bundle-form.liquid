@@ -1,0 +1,171 @@
+<div class="item-wrapper">
+    <div class="item-row header panel otp panel-active">
+        <ul>
+            <li>
+                <span class="subs-title d-block">One-Time Purchase</span>
+            </li>
+            <li>
+                <span class="price comprice">$165.00</span>
+                <span class="price">$99.00</span>
+            </li>
+        </ul>
+    </div>
+    <div class="item-row header panel subs">
+        <ul>
+            <li>
+                <span class="subs-title d-block">Subscribe & Save</span>
+            </li>
+            <li>
+                <span class="price comprice">$165.00</span>
+                <span class="price">$99.00</span>
+            </li>
+        </ul>
+    </div>
+    <div class="item-row details">
+        <ul>
+            <li><span class="subs-recurring">Recurring Includes:</span></li>
+            <li>
+                <select name="select-frequency" id="select-frequency">
+                    <option value="3 Months">Delivery every 3 Months</option>
+                    <option value="6 Months">Delivery every 6 Months</option>
+                </select>
+            </li>
+        </ul>
+        <hr>
+        <ul>
+            <li>
+                <span>Earthwash (90 Days Supply) <span class="subs-free">FREE</span></span>
+            </li>
+            <li>
+                <select name="select-scent" id="select-scent">
+                    <option value="Ocean Breeze">Ocean Breeze</option>
+                    <option value="Scent Free">Scent Free</option>
+                </select>
+            </li>
+        </ul>
+        <ul>
+            <li>
+                <span>Oxy Laundry Booster Tablets (90 Days Supply)</span>
+            </li>
+            <li>
+                <select name="select-type" id="select-type">
+                    <option value="Color Boost">Color Boost</option>
+                    <option value="White">White</option>
+                </select>
+            </li>
+        </ul>
+        <ul>
+            <li>
+                <span>Earthfresh Dryer Sheets</span>
+            </li>
+            <li>
+                <span>90 Day Supply</span>
+            </li>
+        </ul>
+        <ul>
+            <li>
+                <span>Toilet Cleaner Tablets</span>
+            </li>
+            <li>
+                <span>90 Day Supply</span>
+            </li>
+        </ul>
+        <ul>
+            <li>
+                <span>13-Gal Trash Bags</span>
+            </li>
+            <li>
+                <span>90 Day Supply</span>
+            </li>
+        </ul>
+        <ul>
+            <li>
+                <span>2.6-Gal Trash Bags</span>
+            </li>
+            <li>
+                <span>90 Day Supply</span>
+            </li>
+        </ul>
+    </div>
+    <div class="item-row">
+        <button>
+            Add to Cart
+            <img src="https://cdn.shopify.com/s/files/1/0278/0240/2903/files/btn-load.gif?v=1659359480" alt="">
+        </button>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script>
+    window.addEventListener("DOMContentLoaded", () => {
+        const otp = document.querySelector('.item-wrapper .otp');
+        const subs = document.querySelector('.item-wrapper .subs');
+        otp.addEventListener('click', () => {
+            otp.classList.add('panel-active');
+            subs.classList.remove('panel-active');
+        });
+        subs.addEventListener('click', () => {
+            otp.classList.remove('panel-active');
+            subs.classList.add('panel-active');
+        });
+        const btnAdd = document.querySelector('.item-wrapper button');
+        btnAdd.addEventListener('click', () => {
+            let variant_id = 43236325884142;
+            let selling_plan_id = 3457614062;
+            const scent = document.querySelector('#select-scent').value;
+            const oxyType = document.querySelector('#select-type').value;
+            const frequency = document.querySelector('#select-frequency').value;
+            //check variant selection
+            if (scent == 'Ocean Breeze' && oxyType == 'Color Boost') {
+                variant_id = 43236325884142;
+            } else if (scent == 'Scent Free' && oxyType == 'Color Boost') {
+                variant_id = 43236325982446;
+            } else if (scent == 'Ocean Breeze' && oxyType == 'White') {
+                variant_id = 43236326080750;
+            } else if (scent == 'Scent Free' && oxyType == 'White') {
+                variant_id = 43236326179054;
+            }
+
+            //check frequency selection
+            if (frequency == '3 Months') {
+                selling_plan_id = 3457614062;
+            } else if (frequency == '6 Months') {
+                selling_plan_id = 3457646830;
+            }
+
+            jQuery.ajax({
+                type: "POST",
+                url: '/cart/clear.js',
+                data: '',
+                dataType: 'json',
+                success: function () {
+                    data = {
+                        "items": [
+
+                            {
+                                "id": variant_id,
+                                "quantity": 1,
+                                "selling_plan": selling_plan_id
+                            }
+
+                        ]
+                    }
+                    jQuery.ajax({
+                        type: 'POST',
+                        url: '/cart/add.js',
+                        data: data,
+                        dataType: 'json',
+
+                        success: function () {
+                            window.location.href = '/cart/'
+
+                        }
+                    });
+                },
+                error: function (XMLHttpRequest, textStatus) {
+                    /* error code */
+                }
+            });
+        });
+    });
+
+</script>

@@ -1,0 +1,9 @@
+.frame-content > button > span {
+    display: none;
+}
+.frame-content > button > div:nth-child(1) {
+    left: 8px;
+}
+#chat-button {
+    visibility: visible !important;
+}

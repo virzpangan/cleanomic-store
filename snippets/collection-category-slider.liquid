@@ -1,0 +1,76 @@
+{% for collection in collections %}
+{% if collection.title == item %}
+<div class="coll-category-slider sc-recommended">
+    <div class="container-fluid">
+        <div class="row align-items-center">
+            <div class="col-md-4">
+                <div class="wrapper">
+                    <h2>{{ collection.title }}</h2>
+                    <p>{{ collection.description }}</p>
+                    <a href="{{ collection.url }}">View All</a>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="slider-wrapper">
+                    {% for product in collection.products %}
+                    {% if product.id == 7881714565358 %}
+                    {% for variant in product.variants %}
+                    {% if variant.id == 43432473231598 %}
+                    {% assign bathroomkit_comprice = variant.compare_at_price | money %}
+                    {% assign bathroomkit_price = variant.price | money %}
+                    {% endif %}
+                    {% endfor %}
+                    {% endif %}
+                    <div>
+                        <div class="panel">
+                            <figure>
+                                <a href="{{ product.url }}">
+                                  <img src="{{ product.featured_image | img_url: '400x400' }}"
+                                    alt="{{product.featured_image.alt}}">
+                                </a>
+                                <a class="btn-shop" href="{{ product.url }}">{% if product.available %}Shop Now{% else %}Sold Out - Coming Soon{% endif %}</a>
+                            </figure>
+                            <div style="display:flex;align-items:center;" class="ruk_rating_snippet" data-sku="{{ product.handle }};{{ product.variants | map: 'sku' | join: ';' }};{{ product.variants | map: 'id' | join: ';' }}"></div>
+                            <h5>{{ product.title }}</h5>
+                            <span>{% if product.id == 7881714565358 %}{{ bathroomkit_price }} from <span
+                                    style="text-decoration: line-through;">{{ bathroomkit_comprice }}</span>{% else
+                                %}{% if product.compare_at_price > product.price_min %}{{ product.price_min | money }}
+                                from
+                                <span style="text-decoration: line-through;">{{ product.compare_at_price | money
+                                    }}</span>{%
+                                else %}{{
+                                product.price | money }}{% endif %}{% endif %}</span>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endfor %}
+
+<script>
+    $(document).on('ready', function () {
+        $('.sc-recommended .slider-wrapper').slick({
+            slidesToShow: 2,
+            slidesToScroll: 1,
+            speed: 300,
+            arrows: true,
+            infinite: false,
+            variableWidth: true,
+            responsive: [
+                {
+                    breakpoint: 768,
+                    settings: {
+                        slidesToShow: 1,
+                        slidesToScroll: 1,
+                        infinite: false,
+                        variableWidth: true,
+                    }
+                }]
+        });
+    });
+
+</script>

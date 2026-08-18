@@ -1,0 +1,235 @@
+{{ 'custom-style.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'bootstrap.js' | asset_url }}" defer="defer"></script>
+
+{% unless thumbnail_position %}
+  {%- assign thumbnail_position = 'beside' -%}
+{% endunless %}
+
+{% unless description_style %}
+  {%- assign description_style = 'full' -%}
+{% endunless %}
+
+<div id="ProductSection-{{ section_id }}"
+  class="product-section"
+  data-section-id="{{ section_id }}"
+  data-section-type="product-template"
+  {% if settings.product_zoom_enable %}
+    data-image-zoom="true"
+  {% endif %}
+  {% if settings.inventory_enable %}
+    data-inventory="true"
+  {% endif %}
+  {% unless isModal %}
+    data-enable-history-state="true"
+  {% endunless %}>
+
+  {% include 'product-template-variables' %}
+
+  <div class="page-content">
+    <div class="page-width">
+
+      {% if settings.show_breadcrumbs and isModal != true %}
+        {% include 'breadcrumbs' %}
+      {% endif %}
+
+      <div class="grid">
+        <div class="grid__item {{ product_image_width }}">
+          {% include 'product-images', section_id: section_id, isModal: isModal, thumbnail_position: thumbnail_position %}
+        </div>
+
+        <div class="grid__item {{ product_description_width }}">
+
+          <div class="product-single__meta">
+            {% if settings.vendor_enable %}
+              <div class="product-single__vendor">
+                {{ product.vendor }}
+              </div>
+            {% endif %}
+
+            <h4 class="pre-title mb-0">Lorem ipsum dolor sit amet</h4>
+            {% if isModal %}
+              <p class="h2 product-single__title">
+                {{ product.title }}
+              </p>
+            {% else %}
+              <h1 class="h2 product-single__title">
+                {{ product.title }}
+              </h1>
+
+            {% endif %}
+            
+            <div class="yotpo bottomLine mb-2"
+            data-product-id="{{ product.id }}"
+            data-url="">
+            </div>
+            
+            <p class="desc-short">6 Concentrated Tablets. Approximately 1 Month Use</p>
+       		
+            <p class="desc-long" >
+            	Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco. 
+            </p>
+            
+            {% if settings.enable_product_reviews and settings.reviews_layout == 'full' %}
+              {% if isModal %}
+                {%- assign review_link = product.url | within: collection | append: '#Reviews-' | append: product.id -%}
+              {% else %}
+                {%- assign review_link = '#Reviews-' | append: product.id -%}
+              {% endif %}
+              <a href="{{ review_link }}" class="product-single__review-link">
+                <span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>
+              </a>
+            {% endif %}
+
+            {% if settings.sku_enable %}
+              <p id="Sku-{{ section_id }}" class="product-single__sku">
+                {% if current_variant.sku %}
+                  {{ current_variant.sku }}
+                {% endif %}
+              </p>
+            {% endif %}
+            
+            {% if product.id == 4613762318423 %}
+              <div class="product-single__description-full rte">
+                {{ product.description }}
+              </div>
+			{% endif %}
+            <span class="price-label">Price:</span>
+            {% if product.compare_at_price_max >= product.price %}
+              {%- assign hide_sale_price = true -%}
+              {% if current_variant.compare_at_price %}
+                {%- assign hide_sale_price = false -%}
+              {% endif %}
+              <span
+                id="PriceA11y-{{ section_id }}"
+                class="visually-hidden"
+                aria-hidden="{{ hide_sale_price }}">
+                  {{ 'products.general.regular_price' | t }}
+              </span>
+            
+              <span class="product__price-wrap-{{ section_id }}{% if hide_sale_price %} hide{% endif %}">
+                <span id="ComparePrice-{{ section_id }}" class="product__price product__price--compare">
+                  {% if current_variant.compare_at_price >= current_variant.price %}
+                    {{ current_variant.compare_at_price | money }}
+                  {% endif %}
+                </span>
+              </span>
+              <span id="ComparePriceA11y-{{ section_id }}" class="visually-hidden">{{ 'products.general.sale_price' | t }}</span>
+            {% else %}
+              <span id="PriceA11y-{{ section_id }}" class="visually-hidden">{{ 'products.general.regular_price' | t }}</span>
+            {% endif %}
+            
+
+            <span id="ProductPrice-{{ section_id }}"
+              class="product__price{% if current_variant.compare_at_price >= current_variant.price %} on-sale{% endif %}">
+              {% if product.id == 7515189903598 %}
+              List Price: <span>{{ current_variant.price | money }}</span> 
+              {% else %}
+              	{{ current_variant.price | money }}
+              {% endif %}
+              
+            </span>
+            
+                    
+            {% if settings.inventory_enable %}
+              <script>
+                // Store inventory quantities in JS because they're no longer
+                // available directly in JS when a variant changes.
+                // Have an object that holds all potential products so it works
+                // with quick view or with multiple featured products.
+                window.inventories = window.inventories || {};
+                window.inventories['{{section_id}}'] = {};
+                var inv_qty = {};
+                 {% for variant in product.variants %}
+                  window.inventories['{{section_id}}'][{{variant.id}}] = {{ variant.inventory_quantity | default: 0 }};
+                 {% endfor %}
+              </script>
+
+              {%- assign inventory_visible = false -%}
+              {% if current_variant.inventory_management == 'shopify' %}
+                {%- assign inventory_visible = true -%}
+              {% endif %}
+              {% if current_variant.inventory_quantity == 0 %}
+                {%- assign inventory_visible = false -%}
+              {% endif %}
+              <div
+                id="ProductInventory-{{ section_id }}"
+                class="product__inventory {% unless inventory_visible %}hide{% endunless %}"
+                >
+                {% if current_variant.available %}
+                  {{ 'products.product.stock_label' | t: count: current_variant.inventory_quantity }}
+                {% endif %}
+              </div>
+            {% endif %}
+
+            <hr class="hr--medium">
+            
+            {% unless isModal %}
+              {% comment %}
+                Shopify's product form attaches a number of tracking
+                scripts that cause slower load times and false statistics.
+                Quick view modals request these on-demand.
+              {% endcomment %}
+              {% include 'product-custom0422-form', section_id: section_id %}
+            {% else %}
+              <div id="ProductFormHolder-{{ section_id }}" data-url="{{ product.url }}"></div>
+            {% endunless %}
+                    
+          </div>
+        </div>
+      </div>
+      
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item" role="presentation">
+    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Overview</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Ingredients</button>
+  </li>
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">How To Use</button>
+  </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+    <p class="p-400">Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+
+    <p class="p-300">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+  </div>
+  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">profile tab content</div>
+  <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">contact tab content</div>
+</div>
+      
+
+      {% if description_style == 'full' %}
+        <div class="product-single__description-full rte">
+          {{ product.description }}
+        </div>
+
+        {% include 'product-additional-content', section_id: section_id %}
+      {% endif %}
+    </div>
+  </div>
+  {% if product.metafields.yotpo.reviews_count and product.metafields.yotpo.reviews_count != "0" %}
+  <div style="padding: 0 10%;" itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
+  <span itemprop="itemReviewed">{{ product.title }}</span>
+  has a rating of <span itemprop="ratingValue">{{ product.metafields.yotpo.reviews_average }}</span> stars
+  based on <span itemprop="ratingCount">{{ product.metafields.yotpo.reviews_count }}</span> reviews.
+  </div>
+  {% endif %}
+</div>
+
+<div class="sc-product-content">
+  
+{% include 'recommendation' %}
+
+{% include 'review' %}
+
+{% include 'comparison' %}
+
+{% include 'yotpo' %}
+
+{% include 'faq' %}
+
+{% include 'call-to-action' %}
+  
+</div>

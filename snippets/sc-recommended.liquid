@@ -1,0 +1,64 @@
+<div class="sc-recommended">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>A Few Fan Favourites</h2>
+                <div class="slider-wrapper">
+                    {% for product in collections.frontpage.products %}
+                    {% assign mod = forloop.index | modulo: 2 %}
+                   {% if product.id == 7881714565358 %}
+                      {% for variant in product.variants %}
+                         {% if variant.id == 43432473231598 %}
+                              {% assign bathroomkit_comprice = variant.compare_at_price | money %}
+                              {% assign bathroomkit_price = variant.price | money %}
+                         {% endif %}
+                      {% endfor %}
+                    {% endif %}
+                    <div>
+                        <div style="{% if mod != 0 %}margin-top:60px;{% endif %}" class="panel">
+                            <figure>
+                                {% if product.tags != blank %}
+                                <span>{{ product.tags[0]}}</span>
+                                {% endif %}
+                                <a href="{{ product.url }}">
+                                  <img src="{{ product.featured_image | img_url: '300x300' }}"
+                                    alt="{{product.featured_image.alt}}">
+                                </a>
+                                <a class="btn-shop" href="{{ product.url }}">Shop Now</a>
+                            </figure>
+                            <div style="display:none;" class="yotpo bottomLine" data-yotpo-product-id="4613762318423">
+                            </div>
+                            <h5>{{ product.title }}</h5>
+                            <span>{% if product.id == 7881714565358 %}{{ bathroomkit_price }} from <span style="text-decoration: line-through;">{{ bathroomkit_comprice }}</span>{% else
+                                %}{{ product.price | money}}{% endif %}</span>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).on('ready', function () {
+        $('.sc-recommended .slider-wrapper').slick({
+            slidesToShow: 3,
+            slidesToScroll: 1,
+            speed: 300,
+            arrows: true,
+            infinite: false,
+            variableWidth: true,
+            responsive: [
+                {
+                    breakpoint: 768,
+                    settings: {
+                        slidesToShow: 1,
+                        slidesToScroll: 1,
+                        infinite: false,
+                        variableWidth: true,
+                    }
+                }]
+        });
+    });
+
+</script>

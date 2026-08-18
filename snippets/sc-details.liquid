@@ -1,0 +1,53 @@
+{% if meta_default.details %}
+<div class="sc-details">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>{{ meta_default.details.title }}</h2>
+            </div>
+        </div>
+        <div class="row">
+            {% for item in meta_default.details.image %}
+            <div class="col-md-4 col-sm-4">
+                <div class="wrapper text-center">
+                    <img src="{{ meta_default.details.image[forloop.index0] }}" alt="">
+                    <h4>{{ meta_default.details.subtitle[forloop.index0] }}</h4>
+                    <p>{{ meta_default.details.description[forloop.index0] }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="row">
+            <div class="col-md-12 mw-1010">
+                <div class="accordion" id="pannelWrapper">
+                    {% for panel_item in meta_default.details.panel %}
+                    <div class="collapsed" data-toggle="collapse" data-target="#collapse-{{forloop.index0}}"
+                        aria-expanded="false" aria-controls="collapse-{{forloop.index0}}">
+                        <div class="card-header" id="heading-{{forloop.index0}}">
+                            <h3 class="mb-0">
+                                {{ panel_item.title }}
+                            </h3>
+                        </div>
+                        <div id="collapse-{{forloop.index0}}" class="collapse" aria-labelledby="{{forloop.index0}}"
+                            data-parent="#pannelWrapper">
+                            <div class="card-body">
+                                {% for content_item in meta_default.details.panel[forloop.index0].content %}
+                                {{content_item }}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        const firstHeader = document.querySelector('#pannelWrapper > div:first-child');
+        firstHeader.click();
+    });
+</script>

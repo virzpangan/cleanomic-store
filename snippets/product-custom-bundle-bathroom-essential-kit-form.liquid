@@ -1,0 +1,181 @@
+{% for variant in product.variants %}
+  {% if variant.id == 43432473231598 %}
+    {% assign var_comprice = variant.compare_at_price | money  %}
+    {% assign var_price = variant.price | money %}
+  {% endif %}
+{% endfor %}
+<div class="item-wrapper">
+    <div class="item-row header panel otp panel-active">
+        <ul>
+            <li>
+                <span class="subs-title d-block">Subscribe & Save</span>
+            </li>
+            <li>
+                <span class="price comprice">{{ var_comprice }}</span>
+                <span class="price">{{ var_price }}</span>
+            </li>
+        </ul>
+    </div>
+   <div style="margin-bottom:-20px;" class="item-row rc_widget__option__plans"></div>
+    <div class="item-row details">
+        <ul>
+            <li><span class="subs-recurring">Recurring Includes:</span></li>
+            <li>
+                <select name="select-frequency" id="select-frequency">
+                    <option value="3 Months">Delivery every 3 Months</option>
+                    <option value="6 Months">Delivery every 6 Months</option>
+                </select>
+            </li>
+        </ul>
+        <ul>
+            <li>
+                <span>2.6 Gallon Bathroom Waste Bags <span style="color:#63a662">(FREE for Life*)</span></span>
+            </li>
+            <li>
+                <span>90 Day Supply</span>
+            </li>
+        </ul>
+        <ul>
+            <li>
+                <span>2x Reusable Soap Bottle</span>
+            </li>
+            <li>
+                <span style="color:#63a662">FREE</span>
+            </li>
+        </ul>
+        <ul>
+            <li>
+                <span>2x Reusable Spray Bottle </span>
+            </li>
+            <li>
+                <span style="color:#63a662">FREE</span>
+            </li>
+        </ul>
+        <ul>
+            <li>
+                <span>Foaming Hand Soap- French Lavender</span>
+            </li>
+            <li>
+                <span>90 Day Supply</span>
+            </li>
+        </ul>
+        <ul>
+            <li>
+                <span>Tub + Tile</span>
+            </li>
+            <li>
+                <span>90 Day Supply</span>
+            </li>
+        </ul>
+        <ul>
+            <li>
+                <span>Glass + Mirror</span>
+            </li>
+            <li>
+                <span>90 Day Supply</span>
+            </li>
+        </ul>
+        <ul>
+            <li>
+                <span>Toilet Tank Cleaner Tablets</span>
+            </li>
+            <li>
+                <span>90 Day Supply</span>
+            </li>
+        </ul>
+        <ul>
+            <li>
+                <span>Toilet Bowl Cleaner Tablets</span>
+            </li>
+            <li>
+                <span>90 Day Supply</span>
+            </li>
+        </ul>
+    </div>
+    <div class="item-row">
+        <button>
+            <span>Add to Cart</span>
+            <img src="https://cdn.shopify.com/s/files/1/0278/0240/2903/files/btn-loadv2.gif?v=1659359779" width="23.2"
+                alt="">
+        </button>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script>
+    window.addEventListener("DOMContentLoaded", () => {
+        const otp = document.querySelector('.item-wrapper .otp');
+        const btnAdd = document.querySelector('.item-wrapper button');
+        btnAdd.addEventListener('click', () => {
+
+            //loading animation
+            btnAdd.firstElementChild.style.display = 'none';
+            btnAdd.lastElementChild.style.display = 'block';
+
+            let variant_id = 43432473231598;
+            let selling_plan_id = 3479896302;
+
+            const frequency = document.querySelector('#select-frequency').value;
+            //check frequency selection
+            if (frequency == '3 Months') {
+                selling_plan_id = 3479896302;
+            } else if (frequency == '6 Months') {
+                selling_plan_id = 3479929070;
+            }
+
+            subs_purchase(variant_id, selling_plan_id);
+
+        });
+    });
+
+    function subs_purchase(variant_id, selling_plan_id) {
+        jQuery.ajax({
+            type: "POST",
+            url: '/cart/clear.js',
+            data: '',
+            dataType: 'json',
+            success: function () {
+                data = {
+                    "items": [
+
+                        {
+                            "id": variant_id,
+                            "quantity": 1,
+                            "selling_plan": selling_plan_id
+                        },
+                        {
+                            "id": 43432912060654,
+                            "quantity": 2
+                        },
+                        {
+                            "id": 43433481568494,
+                            "quantity": 2
+                        }
+
+                    ]
+                }
+                jQuery.ajax({
+                    type: 'POST',
+                    url: '/cart/add.js',
+                    data: data,
+                    dataType: 'json',
+
+                    success: function () {
+                        window.location.href = '/checkout/'
+
+                        setTimeout(() => {
+                            const btnText = document.querySelector('.item-wrapper button span');
+                            const btnImg = document.querySelector('.item-wrapper button img');
+                            btnText.style.display = 'block';
+                            btnImg.style.display = 'none';
+                        }, "3000");
+
+                    }
+                });
+            },
+            error: function (XMLHttpRequest, textStatus) {
+                /* error code */
+            }
+        });
+    }
+
+</script>

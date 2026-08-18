@@ -1,0 +1,31 @@
+{% if meta_default.faq != blank %}
+<div class="sc-faq">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 mw-1010">
+                <h2 class="mb-5 pb-3">Frequently Asked Questions</h2>
+                <h3 class="mb-3">{{ product.title }}</h3>
+                <div class="accordion" id="accordionWrapper">
+                  	{% for question in meta_default.faq.questions %}
+                    <div class="collapsed" data-toggle="collapse" data-target="#collapse-{{forloop.index0}}" aria-expanded="true"
+                        aria-controls="collapse-{{forloop.index0}}">
+                        <div class="card-header" id="heading-{{forloop.index0}}">
+                            <h5 class="mb-0">
+                                {{ question }}
+                            </h5>
+                        </div>
+
+                        <div id="collapse-{{forloop.index0}}" class="collapse" aria-labelledby="{{forloop.index0}}" data-parent="#accordionWrapper">
+                            <div class="card-body">
+                                <p>{{ meta_default.faq.answers[forloop.index0] }}</p>
+                            </div>
+                        </div>
+                    </div>
+                  {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+<script src="{{ 'bootstrap.min.js' | asset_url }}" defer="defer"></script>

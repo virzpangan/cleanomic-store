@@ -1,0 +1,55 @@
+<style>
+  .show-discount {
+    text-align: center;
+    padding: 6px 20px 5px;
+    font-weight: 600;
+    font-size: .84118em;
+    background: #d11141;
+    letter-spacing: 1px;
+    color: white;
+}
+  
+</style>
+
+<div id="discount-message"></div>
+
+<script type="text/javascript">
+  var codeCookieValue;
+  var getCookie = function(name) {
+    var value = "; " + document.cookie;
+    var parts = value.split('; '+name+'=');
+    if (parts.length == 2) return parts.pop().split(";").shift();
+  };
+  codeCookieValue = getCookie('discount_code');
+  if(!codeCookieValue){
+    console.log("No Discount Code");
+  }
+
+  if(codeCookieValue == "TEXT15"){
+    console.log("Discount Code - " + codeCookieValue);
+    document.getElementById("discount-message").innerHTML="<div class='show-discount'>Your 15% Off Free Gift Will Automatically Apply at Checkout</div>";
+
+  }
+
+    if(codeCookieValue == "VIPCLUB"){
+    console.log("Discount Code - " + codeCookieValue);
+    document.getElementById("discount-message").innerHTML="<div class='show-discount'>Your 30% Off Free Gift Will Automatically Apply at Checkout</div>";
+
+  }
+  </script>
+
+{% if customer %}
+  {% if customer.tags contains 'virtualMembership' %}
+    <script>
+      const vipBanner = document.querySelector(".announcement__text");
+      vipBanner.innerHTML="Your 20% Off VIP Discount + FREE Shipping Will Automatically Apply at Checkout";
+      vipBanner.classList.add('vip-banner');
+    </script>
+  {% else %}
+        <script>
+      console.log('REGULAR CUSTOMER');
+    </script>
+  {% endif %}
+{% else %}
+
+{% endif %}

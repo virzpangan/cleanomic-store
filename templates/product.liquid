@@ -1,0 +1,141 @@
+{% render 'shogun-products', content: product %}
+{{product.metafields.shogun.above}}
+{% section 'product-template' %}
+
+
+<script>
+  // Override default values of shop.strings for each template.
+  // Alternate product templates can change values of
+  // add to cart button, sold out, and unavailable states here.
+  theme.productStrings = {
+    addToCart: {{ 'products.product.add_to_cart' | t | json }},
+    soldOut: {{ 'products.product.sold_out' | t | json }},
+    unavailable: {{ 'products.product.unavailable' | t | json }}
+  };
+</script>
+
+
+<script type="text/javascript">
+  var _learnq = _learnq || [];
+
+  var item = {
+    Name: {{ product.title|json }},
+    ProductID: {{ product.id|json }},
+    Categories: {{ product.collections|map:'title'|json }},
+    ImageURL: "https:{{ product.featured_image.src|img_url:'grande' }}",
+    URL: "{{ shop.secure_url }}{{ product.url }}",
+    Brand: {{ product.vendor|json }},
+    Price: {{ product.price|money|json }},
+    CompareAtPrice: {{ product.compare_at_price_max|money|json }}
+  };
+
+  _learnq.push(['track', 'Viewed Product', item]);
+  _learnq.push(['trackViewedItem', {
+    Title: item.Name,
+    ItemId: item.ProductID,
+    Categories: item.Categories,
+    ImageUrl: item.ImageURL,
+    Url: item.URL,
+    Metadata: {
+      Brand: item.Brand,
+      Price: item.Price,
+      CompareAtPrice: item.CompareAtPrice
+    }
+  }]);
+</script>
+
+<script type="text/javascript">
+    var _learnq = _learnq || [];
+    document.querySelector('.add-to-cart').addEventListener('click',function (){	
+      _learnq.push(['track', 'Added to Cart Shopify', item]);
+    });
+</script>
+
+{{product.metafields.shogun.below}}
+
+<div style="max-width: 960px;margin;auto;padding-top:20px;padding-bottom:50px;" class="yotpo yotpo-main-widget" data-product-id="{{ product.id }}" data-name="{{ product.title | escape }}" data-url="{{ shop.url }}{{ product.url }}" data-image-url="{{ product.featured_image | product_img_url: 'large' |replace: '?', '%3F' | replace: '&','%26'}}" data-price="{{ variant.price | money_without_currency }}"
+data-currency=“{{ shop.currency }}” data-description=“{{ product.description | escape }}“>
+{%- assign yotpo_offload_content = shop.metafields.yotpo.yotpo_offload_content %}
+  {%- assign time_now = 'now' | date: '%s' %}
+  {%- assign yotpo_live_time = shop.metafields.yotpo.yotpo_live | date: '%s' %}
+  {%- assign diff_seconds_from_live = time_now | minus: yotpo_live_time %}
+  {%- assign yotpo_main_widget_last_updated = product.metafields.yotpo.main_widget_update_time | date: '%s' %}
+  {%- assign diff_seconds_from_last_main_widget_update = time_now | minus: yotpo_main_widget_last_updated %}
+  {%- if yotpo_live_time and diff_seconds_from_live < 86400 or yotpo_main_widget_last_updated and diff_seconds_from_last_main_widget_update < 86400 -%}
+    {%- assign yotpo_main_widget_obsolete = false %}
+  {%- else %}
+    {%- assign yotpo_main_widget_obsolete = true %}
+  {%- endif %}
+  {%- if yotpo_offload_content == 'yes' and yotpo_main_widget_obsolete != true -%}
+    {%- for field in product.metafields.yotpo_reviews -%}
+      {{ field | last }}
+    {%- endfor -%}
+  {%- endif %}
+</div>
+
+<script type='text/javascript'>
+  window.smartlook||(function(d) {
+    var o=smartlook=function(){ o.api.push(arguments)},h=d.getElementsByTagName('head')[0];
+    var c=d.createElement('script');o.api=new Array();c.async=true;c.type='text/javascript';
+    c.charset='utf-8';c.src='https://rec.smartlook.com/recorder.js';h.appendChild(c);
+    })(document);
+    smartlook('init', '0aa31be5c2c7844ab762f20e8e4678be35bf02f5');
+</script>
+
+<div style="display:none;" class="yotpo yotpo-main-widget" data-product-id="{{ product.id }}" data-name="{{ product.title | escape }}" data-url="{{ shop.url }}{{ product.url }}" data-image-url="{{ product.featured_image | product_img_url: "large" |replace: '?', '%3F' | replace: '&','%26'}}" data-description="{{ product.description | escape }}"></div>
+
+
+{% if product.id == 7522301051118 %}
+	
+<script>
+window.addEventListener("DOMContentLoaded", () => {
+    const url_string = window.location.href
+    let url = new URL(url_string);
+    const variant_id = url.searchParams.get("variant_id");
+    const subscription = url.searchParams.get("subscription");
+    const frequency = url.searchParams.get("frequency");
+    const unit_type = url.searchParams.get("unit_type");
+	
+    if(subscription == 'true'){
+
+      addItemToCart(variant_id, 1, frequency, unit_type);
+       
+    }
+});
+
+function addItemToCart(variant_id, qty, frequency, unit_type) {
+      data = {
+   
+        {
+            id: 42289012441326,
+            quantity: 1
+         
+            
+        }
+    
+  }
+
+    
+    jQuery.ajax({
+      type: 'POST',
+      url: '/cart/add.js',
+      data: data,
+      dataType: 'json',
+      success: function() { 
+        window.location.href = '/cart'; 
+      }
+    });
+    window.location = '/checkout';
+  }
+  
+  
+ 
+
+function clearClartData(){
+  return Shopify.clear();
+};
+
+</script>
+
+{% endif %}
+{{ product.metafields.shogun.optimizer }}

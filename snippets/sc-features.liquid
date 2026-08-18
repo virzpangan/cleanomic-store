@@ -1,0 +1,23 @@
+{% if meta_default.features != blank %}
+<div class="sc-features">
+    <div class="container">
+        <div class="row column-reverse-md">
+            <div class="col-md-6">
+                <img src="{{ meta_default.features.image }}" alt="">
+            </div>
+            <div class="col-md-6 d-flex align-items-center">
+                <div class="wrapper">
+                    <h5>{{ meta_default.features.pre_title}}</h5>
+                    <h2>{{ meta_default.features.title}}</h2>
+                    <p>{{ meta_default.features.description}}</p>
+                    <ul>
+                        {% for list in meta_default.features.list %}
+                        <li>{{ list }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}

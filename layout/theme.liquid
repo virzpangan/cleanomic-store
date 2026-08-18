@@ -1,0 +1,220 @@
+{% include 'shogun-content-handler' %}
+<!doctype html>
+<html class="no-js" lang="{{ shop.locale }}">
+<head><!-- hnk portfolio proof -->
+<!-- Google Tag Manager -->
+<script>(function (w, d, s, l, i) {
+        w[l] = w[l] || []; w[l].push({
+            'gtm.start':
+                new Date().getTime(), event: 'gtm.js'
+        }); var f = d.getElementsByTagName(s)[0],
+            j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-58PSQ8C');</script>
+<!-- End Google Tag Manager -->
+<script type="text/javascript">(function e(){var e=document.createElement("script");e.type="text/javascript",e.async=true,e.src="//staticw2.yotpo.com/zPeaiNA28gbHYI4IIAS9nXJXFe1lLlY1CTt3A51s/widget.js";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)})();</script>
+<script type="text/javascript">
+(function e(){var e=document.createElement("script");e.type="text/javascript",e.async=true,e.src="//staticw2.yotpo.com/IGYoHw43u9axnf5CUxRmujUI2852wtNrxdz3Gnya/widget.js";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)})();
+</script>   
+
+<script>
+    const url_string = window.location.href
+    let url = new URL(url_string);
+    if(url.pathname == "/products" || url.pathname == "/products/" || url.pathname == "/collections/" || url.pathname == "/collections"){
+      window.location.href = '/collections/catalog';
+    }
+</script>
+ <meta name=“p:domain_verify” content=“95d5520fe993314e8a3ca3b43481a653"/> 
+<meta name="google-site-verification" content="dci9e0CmOby5Ab_SKGp6sNjbn3ZmTY0oEaWJlbeeqPw" />
+<meta name="google-site-verification" content="QhI3y_z52bijVrywTFDJ0L7rVwo86AsoRZbpqhrctjo" />  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="{{ settings.color_button }}">
+  <meta name="google-site-verification" content="4WlZItw5ta8vn5ByVs9JTYQhQGNahpzz6M2Rb8rqWCI" />
+  <meta name="format-detection" content="telephone=no">
+
+  {%- if settings.favicon -%}
+    <link rel="shortcut icon" href="{{ settings.favicon | img_url: '32x32' }}" type="image/png" />
+  {%- endif -%}
+
+  {% include 'seo-title' %}
+  <title>{{ seo_title }}</title>
+
+  {%- if page_description -%}
+  <meta name="description" content="{{ page_description | escape }}">
+  {%- endif -%}
+  
+
+
+  {% include 'font-face' %}
+  
+  
+  {{ 'bootstrap.min.css' | asset_url | stylesheet_tag }}
+  {{ 'slick-theme.css' | asset_url | stylesheet_tag }}
+
+  {% unless template == 'page.zipbagbundle' or template == 'product.et1-zb_bundle' %}
+    {{ 'theme.scss.css' | asset_url | stylesheet_tag }}
+  {{ 'header-footer-style.css' | asset_url | stylesheet_tag }}
+   {{ 'style.css' | asset_url | stylesheet_tag }}
+  {% endunless %}
+
+{% comment %}
+{%- assign yotpo_offload_content = shop.metafields.yotpo.yotpo_offload_content %}
+{%- assign time_now = 'now' | date: '%s' %}
+{%- assign yotpo_live_time = shop.metafields.yotpo.yotpo_live | date: '%s' %}
+{%- assign diffSeconds = time_now | minus: yotpo_live_time %}
+{%- if yotpo_offload_content == 'yes' and diffSeconds < 86400 -%}
+{{ 'yotpo-full-css.css' | asset_url | stylesheet_tag }}
+{%- endif -%}
+ {% endcomment %}
+
+  <script>
+    document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+
+    window.theme = window.theme || {};
+    theme.strings = {
+      addToCart: {{ 'products.product.add_to_cart' | t | json }},
+      soldOut: {{ 'products.product.sold_out' | t | json }},
+      unavailable: {{ 'products.product.unavailable' | t | json }},
+      stockLabel: {{ 'products.product.stock_label' | t: count: '[count]' | json }},
+      cartSavings: {{ 'cart.general.savings_html' | t: savings: '[savings]' | json }},
+      cartEmpty: {{ 'cart.general.empty' | t | json }},
+      cartTermsConfirmation: {{ 'cart.general.terms_confirm' | t | json }}
+    };
+    theme.settings = {
+      dynamicVariantsEnable: true,
+      dynamicVariantType: {{ settings.variant_type | json }},
+      cartType: {{ settings.cart_type | json }},
+      currenciesEnabled: {{ settings.enable_currencies | json }},
+      moneyFormat: {{ shop.money_format | json }},
+      quickView: {{ settings.quick_shop_enable }},
+      themeVersion: "4.1.0"
+    };
+  </script>
+
+  {{ content_for_header }}
+
+  <script src="{{ 'vendor-scripts-v4.js' | asset_url | split: '?' | first }}" defer="defer"></script>
+
+  {% if settings.enable_currencies %}
+    <script src="/services/javascripts/currencies.js" defer="defer"></script>
+    <script src="{{ 'currencies.jquery.min.js' | asset_url | split: '?' | first }}" defer="defer"></script>
+  {% endif %}
+
+   {% unless template == 'page.zipbagbundle' %}
+  <script src="https://unpkg.com/scrollreveal"></script>
+  <script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'custom.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'customer-vip.js' | asset_url }}" defer="defer"></script>
+   <script src="{{ 'bundle.js' | asset_url }}" defer="defer"></script>
+  <script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
+  {%- if template contains 'customers' -%}
+    <script src="{{ 'shopify_common.js' | shopify_asset_url }}" defer="defer"></script>
+  {%- endif -%}
+  {% endunless %}
+
+<!-- Pinterest Pixel Base Code --><script type="text/javascript">!function(e){if(!window.pintrk){window.pintrk=function(){window.pintrk.queue.push(Array.prototype.slice.call(arguments))};var n=window.pintrk;n.queue=[],n.version="3.0";var t=document.createElement("script");t.async=!0,t.src=e;var r=document.getElementsByTagName("script")[0];r.parentNode.insertBefore(t,r)}}("https://s.pinimg.com/ct/core.js");pintrk("load", "2613868799894");pintrk("page");</script><!-- Pinterest Pixel Base Code --><!-- magicpin -->
+<!--magicpin visit--><script>pintrk('track', 'pagevisit');</script><!--magicpin visit-->
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-124566353-49"></script>
+<script>
+ window.dataLayer = window.dataLayer || [];
+ function gtag(){dataLayer.push(arguments);}
+ gtag('js', new Date());
+ gtag('config', 'UA-124566353-49');
+</script>
+
+    {% render 'shogun-head' %}
+{%render 'fbTrack' %}<!-- DO NOT REMOVE Effective Apps TiXel Code Start--><link id="eaManualTPI" /><script> !function (w, d, t) { w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var i="https://analytics.tiktok.com/i18n/pixel/events.js";ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=i,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};var o=document.createElement("script");o.type="text/javascript",o.async=!0,o.src=i+"?sdkid="+e+"&lib="+t;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(o,a)}; ttq.load("CBUQPRBC77UFL42EP2G0"); ttq.page(); }(window, document, "ttq"); </script><!-- DO NOT REMOVE Effective Apps TiXel Code End-->
+
+<!-- Audience Lab Pixel -->
+<script src="https://cdn.idpixel.app/v1/idp-analytics-6a4d6f525c012440693ab26e.min.js" defer></script>
+</head>
+
+
+<body class="template-{{ template | replace: '.', ' ' | truncatewords: 1, '' | handle }}{% if settings.enable_currencies %} currencies-enabled{% endif %}" data-transitions="{{ settings.animate_page_transitions }}">
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-58PSQ8C" height="0" width="0"
+        style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+  {% if settings.animate_page_transitions %}
+    <script type="text/javascript">window.setTimeout(function() { document.body.className += " loaded"; }, 25);</script>
+  {% endif %}
+
+  <a class="in-page-link visually-hidden skip-link" href="#MainContent">{{ 'general.accessibility.skip_to_content' | t }}</a>
+
+  <div id="PageContainer" class="page-container">
+    <div class="transition-body">
+
+    {% section 'header' %}
+
+      <main class="main-content" id="MainContent">
+        {{ content_for_layout }}
+      </main>
+
+      {% section 'footer-custom' %}
+
+    </div>
+  </div>
+
+  {% section 'newsletter-popup' %}
+
+  {% if settings.cart_type == 'drawer' %}
+    {% include 'ajax-cart-template' %}
+  {% endif %}
+
+  {% if settings.enable_currencies %}
+    <span
+      id="CurrencyData"
+      class="hide"
+      data-shop-currency="{{ shop.currency }}"
+      data-default-currency="{{ settings.default_currency | default: shop.currency }}"
+      data-format="{{ settings.currency_format | default: 'money_with_currency_format' }}"
+      data-money-format="{{ shop.money_format | strip_html }}"
+      data-money-currency-format="{{ shop.money_with_currency_format | strip_html }}">
+    </span>
+  {% endif %}
+
+  {% include 'video-modal' %}
+  {% include 'photoswipe-template' %}
+  
+
+
+<!--Accessible Script-->
+<script>(function () { var s = document.createElement('script'), e = !document.body ? document.querySelector('head') : document.body; s.src = 'https://acsbapp.com/apps/app/assets/js/acsb.js'; s.async = s.defer = true; s.onload = function () { acsbJS.init({ statementLink: '', feedbackLink: '', footerHtml: '', hideMobile: true, hideTrigger: true, language: 'en', position: 'right', leadColor: '#146FF8', triggerColor: '#146FF8', triggerRadius: '50%', triggerPositionX: 'right', triggerPositionY: 'bottom', triggerIcon: 'default', triggerSize: 'medium', triggerOffsetX: 20, triggerOffsetY: 20, mobile: { triggerSize: 'small', triggerPositionX: 'right', triggerPositionY: 'center', triggerOffsetX: 0, triggerOffsetY: 0, triggerRadius: '50%' } }); }; e.appendChild(s); }());</script>
+<!--Accessible Script-->
+  
+  {% if product.id == 8097480114414 or product.id == 8097958723822 or product.id == 8097958920430 %}
+  {% else %}
+      {% endif %}
+  
+  <script>
+    window.GORGIASCHAT_DISABLE_AUTO_OPEN = true
+    var gorgiasCustomStylesUrl = "{{ 'gorgias-custom.css' | asset_url }}"
+</script>
+  <!-- UET Pixel Code -->
+<script>(function (w, d, t, r, u) { var f, n, i; w[u] = w[u] || [], f = function () { var o = { ti: "138000913" }; o.q = w[u], w[u] = new UET(o), w[u].push("pageLoad") }, n = d.createElement(t), n.src = r, n.async = 1, n.onload = n.onreadystatechange = function () { var s = this.readyState; s && s !== "loaded" && s !== "complete" || (f(), n.onload = n.onreadystatechange = null) }, i = d.getElementsByTagName(t)[0], i.parentNode.insertBefore(n, i) })(window, document, "script", "//bat.bing.com/bat.js", "uetq");</script>
+ 
+<script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "oo6pckp6or");
+</script>
+
+  <script src="https://widget.reviews.io/rating-snippet/dist.js" ></script>
+<link rel="stylesheet" href="https://widget.reviews.io/rating-snippet/dist.css" />
+<script>
+ratingSnippet("ruk_rating_snippet",{
+  store: "cleanomic",
+  color: "#0E1311",
+  linebreak: true,
+  usePolaris: true,
+  text: "Reviews"
+});
+</script>
+  
+  </body>
+</html>

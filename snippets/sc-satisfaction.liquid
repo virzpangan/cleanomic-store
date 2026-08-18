@@ -1,0 +1,38 @@
+{% if meta_default.satisfaction != blank %}
+<div class="sc-satisfaction">
+    <div class="container">
+        <div class="row rw-title">
+            <div class="col-md-12">
+                <div class="wrapper text-center">
+                    <h2>30-Day Satisfaction Guarantee</h2>
+                    <p>If you’re not satisfied with your Cleanomic product, simply contact our Customer Support Team within 30 day of purchase. One of our dedicated agents will handle your return. Just pay a small processing fee and return shipping for returns/exchanges.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="row rw-content">
+            <div class="col-md-4 col-sm-4">
+                <div class="wrapper text-center">
+                    {% render 'icon-free-shipping' %}
+                    <h4 class="wm-136-md">{{ meta_default.satisfaction.panel.title[0] }}</h4>
+                    <p>{{ meta_default.satisfaction.panel.description[0] }}</p>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-4">
+                <div class="wrapper text-center">
+                    {% render 'icon-help' %}
+                    <h4>{{ meta_default.satisfaction.panel.title[1] }}</h4>
+                    <p>{{ meta_default.satisfaction.panel.description[1] }}</p>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-4">
+                <div class="wrapper text-center">
+                    {% render 'icon-satisfied-customer' %}
+                    <h4>130K+ Satisfied Customers</h4>
+                    <p>Thousands of Americans trust Cleanomic for sustainable, “planet-friendly” home solutions.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}

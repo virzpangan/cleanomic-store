@@ -1,0 +1,35 @@
+{% if meta_default.comparison%}
+<div class="sc-comparison">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>{{ meta_default.comparison.title }}</h2>
+                <div class="wrapper">
+                    <div class="panel">
+                        <div class="content-wrapper">
+                            <h4>{{ meta_default.comparison.content_left.title }}</h4>
+                            <ul>
+                                {% for item in meta_default.comparison.content_left.list %}
+                                <li class="{{ meta_default.comparison.content_left.class[forloop.index0] }}">{{
+                                    meta_default.comparison.content_left.list[forloop.index0] }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="panel">
+                        <div class="content-wrapper">
+                            <h4>{{ meta_default.comparison.content_right.title }}</h4>
+                            <ul>
+                                {% for item in meta_default.comparison.content_right.list %}
+                                <li class="{{ meta_default.comparison.content_right.class[forloop.index0] }}">{{
+                                    meta_default.comparison.content_right.list[forloop.index0] }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}

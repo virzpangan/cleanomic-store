@@ -1,0 +1,180 @@
+<style>
+    .sc-klaviyo-divider {
+        display: none;
+    }
+
+    .sticky-cta {
+        z-index: 10;
+        border-top: 2px solid #EEEEEE;
+        border-bottom: 2px solid #EEEEEE;
+        background-color: #fff;
+        padding-top: 10px;
+        padding-bottom:10px;
+        position: sticky;
+        display: flex;
+        justify-content: space-between;
+        bottom: 0;
+    }
+  .sticky-cta ul li{
+    margin-bottom: 0;
+  }
+
+  .sticky-cta ul li:first-child{
+    margin-bottom: 5px;
+  }
+  .sticky-cta ul {
+    list-style: none;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1;
+    text-transform: capitalize;
+    color: #383838;
+    margin: 0;
+    }
+
+  .yotpo.bottomLine .yotpo-bottomline .yotpo-icon-star{
+    font-size: 14px!important;
+  }
+
+    .sticky-cta img {
+        width: 80px;
+    }
+
+    .sticky-cta .yotpo .standalone-bottomline .star-clickable {
+        justify-content: start !important;
+        margin-bottom: 0;
+    }
+
+    .sticky-cta .yotpo-stars {
+        margin-left: 0 !important;
+        margin-right: 10px !important;
+    }
+
+  .sticky-cta button {
+      width: 140px;
+      height: 46px;
+      background-color: #FE8B59;
+      text-transform: uppercase;
+      color: #fff;
+      font-weight: 700;
+      font-size: 13px;
+      border-radius: 6px;
+    transition: background .2s ease 0s;
+  }
+
+  .sticky-cta button:hover{
+    background-color: #ff7b42;
+    transition-delay: .25s;
+  }
+ 
+  .acsb-trigger.acsb-trigger-position-x-right.acsb-mobile,
+    .acsb-trigger.acsb-trigger-position-y-bottom.acsb-mobile,
+    .acsb-trigger.acsb-bg-lead.acsb-ready.acsb-trigger-position-x-right.acsb-trigger-position-y-bottom.acsb-trigger-size-medium {
+        display: none !important;
+    }
+div#gorgias-chat-container,
+  button#gorgias-chat-messenger-button {
+    display: none!important;
+}
+
+    @media screen and (max-width: 579px) {
+        .sticky-cta {
+            border: none;
+            background-color: #ffeebf;
+            padding-top: 15px;
+            padding-bottom: 15px;
+        }
+
+        .sticky-cta img {
+            display: none;
+        }
+
+        .sticky-cta .container {
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+
+
+    }
+</style>
+<div style="display:none;" class="sticky-cta">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center">
+                    <img style="margin-right:15px;"
+                        src="https://cdn.shopify.com/s/files/1/0278/0240/2903/files/earthwash-cut.png?v=1663800866"
+                        alt="">
+                    <ul>
+                        <li>
+                            Earthwash
+                        </li>
+                        <li>
+                            <div class="yotpo bottomLine" data-yotpo-product-id="4613762318423">
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <button class="btn-buy-now">Buy Now</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+
+
+    window.addEventListener('DOMContentLoaded', () => {
+        const myScrollFunc = function () {
+            let y = window.scrollY;
+            const stickyCTA = document.querySelector('.sticky-cta');
+            if (y > 1106) {
+                stickyCTA.style.display = 'block';
+            } else {
+                stickyCTA.style.display = 'none';
+            }
+        };
+        window.addEventListener("scroll", myScrollFunc);
+
+        const btnBuyNow = document.querySelector('.btn-buy-now');
+        btnBuyNow.addEventListener('click', () => {
+            //btnBuyNow.innerText = 'Processing...'
+            checkout(43526611271918, btnBuyNow);
+        });
+    });
+
+    function checkout(variant_id, btn) {
+        jQuery.ajax({
+            type: "POST",
+            url: '/cart/clear.js',
+            data: '',
+            dataType: 'json',
+            success: function () {
+                data = {
+                    "items": [
+
+                        {
+                            "id": variant_id,
+                            "quantity": 1
+                        }
+
+                    ]
+                }
+                jQuery.ajax({
+                    type: 'POST',
+                    url: '/cart/add.js',
+                    data: data,
+                    dataType: 'json',
+
+                    success: function () {
+                        window.location.href = '/cart/'
+                        //btn.innerText = 'Buy Now';
+                    }
+                });
+            },
+            error: function (XMLHttpRequest, textStatus) {
+                /* error code */
+            }
+        });
+    }
+</script>

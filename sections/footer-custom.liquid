@@ -1,0 +1,103 @@
+{% assign home = linklists.home %}
+{% assign shop = linklists.shop %}
+{% assign legal = linklists.legal %}
+{% assign orders = linklists.orders %}
+{% assign socials = linklists.socials %}
+{% assign amazon = linklists.amazon-listing %}
+
+<style>
+    .site-footer {
+        display: none;
+    }
+</style>
+<a style="display:none" href="https://www.amazon.com/best-laundry-detergent-sheets-eco-friendly-strips-earthwash/dp/B096N8XQNP"></a>
+<footer class="custom-footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 p-0">
+                <div class="wrapper-logo">
+                    {% render 'icon-logo-white'%}
+                    <span>Meaningful solutions that change the way we live.</span>
+                </div>
+            </div>
+            <div class="col-md-9 p-0">
+                <div class="row m-0">
+                    <div class="col-md-3 col-sm-6 p-0">
+                        <div class="wrapper-link">
+                            <h5>{{ home.title }}</h5>
+                            <ul>
+                                {% for item in home.links %}
+                                <li><a href="{{ item.url }}">{{ item.title }}</a></li>
+                                {% endfor %}
+                                <li><button onclick="openChatWidget();">Live Chat</button></li>
+                                <li><button onclick="document.querySelector('.acsb-trigger').click();">Accessibility</button></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 p-0">
+                        <div class="wrapper-link">
+                            <h5>{{ shop.title }}</h5>
+                            <ul>
+                                {% for item in shop.links %}
+                                <li><a href="{{ item.url }}">{{ item.title }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 p-0">
+                        <div class="wrapper-link">
+                            <h5>{{ legal.title }}</h5>
+                            <ul>
+                                {% for item in legal.links %}
+                                <li><a href="{{ item.url }}">{{ item.title }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 p-0">
+                        <div class="wrapper-link">
+                            <h5>{{ amazon.title }}</h5>
+                            <ul style="margin-bottom: 30px;">
+                                {% for item in amazon.links %}
+                                <li><a href="{{ item.url }}" target="_blank">{{ item.title }}</a></li>
+                                {% endfor %}
+                            </ul>
+                            <h5>{{ orders.title }}</h5>
+                            <ul>
+                                {% for item in orders.links %}
+                                <li><a href="{{ item.url }}">{{ item.title }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row b-tb-1">
+            <div class="col-md-12 p-0 d-flex">
+                {% render 'icon-payments'%}
+                <div class="socials">
+                    <span>Follow Cleanomic</span>
+                    <ul>
+                        {% for item in socials.links %}
+                        {% if item.title == 'Facebook' %}
+                        <li><a href="{{ item.url }}" target="_blank">{% render 'icon-facebook-white' %}</a></li>
+                        {% endif %}
+                        {% if item.title == 'Instagram' %}
+                        <li><a href="{{ item.url }}" target="_blank">{% render 'icon-instagram-white' %}</a></li>
+                        {% endif %}
+                        {% if item.title == 'Pinterest' %}
+                        <li><a href="{{ item.url }}" target="_blank">{% render 'icon-pinterest-white' %}</a></li>
+                        {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <span class="copyright">&copy; {{ 'now' | date: '%Y' }} Cleanomic, Inc.</span>
+            </div>
+        </div>
+    </div>
+</footer>

@@ -1,0 +1,37 @@
+<style>
+    .main-content {
+        background-color: #fffdf8;
+    }
+
+    .octane-ai-quiz-rendered>div>div>div {
+        font-family: Lexend !important;
+        font-weight: 400 !important;
+        color: #185741 !important;
+    }
+
+    .oct-quiz-multiple-choice-options__option {
+        font-family: Lexend !important;
+        font-size: 18px !important;
+        font-weight: 500 !important;
+
+    }
+</style>
+<div class="page-width page-content">
+
+    {% include 'breadcrumbs' %}
+
+    <div class="grid">
+        <div class="grid__item medium-up--three-quarters medium-up--push-one-eighth">
+
+            <header class="section-header">
+                <h1 style="display:none;" class="section-header__title">{{ page.title }}</h1>
+            </header>
+
+            <div class="rte rte--nomargin">
+                {{ page.content }}
+            </div>
+
+        </div>
+    </div>
+
+</div>

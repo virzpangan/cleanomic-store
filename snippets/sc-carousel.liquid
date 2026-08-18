@@ -1,0 +1,763 @@
+<style>
+  :root {
+    --color-forest: #005b47;
+    --color-forest-dark: #004b3b;
+    --color-ivory: #f5f2eb;
+    --color-dot: #c8d2cd;
+    --color-white: #ffffff;
+    --font-display: "Marcellus", Georgia, serif;
+    --font-body: "Lexend", Arial, sans-serif;
+    --hero-height: calc(100vh - 100px);
+    --content-width: 20rem;
+    --content-left: 145px;
+    --control-bottom: 0.9rem;
+    --transition: 180ms ease;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html,
+  body {
+    width: 100%;
+    min-height: 100%;
+    margin: 0;
+    overflow-x: clip;
+  }
+
+  body {
+    color: var(--color-forest);
+    background: var(--color-ivory);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .hero {
+    margin-top: 100px;
+  }
+
+  main,
+  .hero,
+  .hero-carousel,
+  .slick-list {
+    max-width: 100%;
+  }
+
+  .hero {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    background: #dfe6df;
+  }
+
+  .hero-carousel:not(.slick-initialized) .hero-slide:not(:first-child) {
+    display: none;
+  }
+
+  .hero-carousel:not(.slick-initialized) .hero-slide:first-child {
+    display: block;
+  }
+
+  .hero-carousel .slick-track {
+    display: flex;
+  }
+
+  .hero-carousel .slick-slide {
+    height: auto;
+  }
+
+  .hero-carousel .slick-slide>div:not([class]),
+  .hero-slide {
+    height: 100%;
+  }
+
+  .hero-slide {
+    position: relative;
+    min-height: var(--hero-height);
+    overflow: hidden;
+    background: #dfe6df;
+    isolation: isolate;
+  }
+
+  .hero-slide__image {
+    position: absolute;
+    inset: 0;
+    z-index: -3;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .hero-slide__image--bags {
+    object-position: 58% center;
+  }
+
+  .hero-slide__image--refills {
+    object-position: 60% center;
+  }
+
+
+  /* Cinematic motion layer: keeps the existing design while giving each
+   transition a softer crossfade, restrained image drift, and staggered copy. */
+  .hero-carousel {
+    --motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
+    --motion-image-duration: 1600ms;
+    --motion-wash-duration: 1250ms;
+    --motion-copy-duration: 850ms;
+    --motion-image-rest-scale: 1.085;
+    --motion-image-active-scale: 1.025;
+  }
+
+  .hero-carousel--cinematic .slick-track {
+    display: block;
+  }
+
+  .hero-carousel--cinematic .slick-list,
+  .hero-carousel--cinematic .slick-track,
+  .hero-carousel--cinematic .slick-slide {
+    backface-visibility: hidden;
+    transform: translateZ(0);
+  }
+
+  .hero-carousel.motion-primed .hero-slide__image {
+    --motion-image-x: 1.35%;
+    transform: translate3d(var(--motion-image-x), 0, 0) scale(var(--motion-image-rest-scale));
+    transform-origin: center center;
+    transition: transform var(--motion-image-duration) var(--motion-ease);
+    will-change: transform;
+  }
+
+  .hero-carousel.motion-primed .hero-slide__image--refills {
+    --motion-image-x: -1.35%;
+  }
+
+  .hero-carousel.motion-primed.is-ready .slick-current .hero-slide__image {
+    transform: translate3d(0, 0, 0) scale(var(--motion-image-active-scale));
+  }
+
+  .hero-carousel.motion-primed .hero-slide__wash {
+    opacity: 0.78;
+    transform: translate3d(-0.75%, 0, 0) scaleX(0.99);
+    transform-origin: left center;
+    transition:
+      opacity var(--motion-wash-duration) ease,
+      transform var(--motion-wash-duration) var(--motion-ease);
+    will-change: opacity, transform;
+  }
+
+  .hero-carousel.motion-primed.is-ready .slick-current .hero-slide__wash {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scaleX(1);
+  }
+
+  .hero-carousel.motion-primed .hero-slide__content>* {
+    opacity: 0;
+    filter: blur(2px);
+    clip-path: inset(0 0 16% 0);
+    transform: translate3d(0, 1.35rem, 0);
+    transition:
+      opacity 620ms ease,
+      filter 620ms ease,
+      clip-path var(--motion-copy-duration) var(--motion-ease),
+      transform var(--motion-copy-duration) var(--motion-ease);
+    transition-delay: 0ms;
+    will-change: opacity, filter, clip-path, transform;
+  }
+
+  .hero-carousel.motion-primed.is-ready .slick-current .hero-slide__content>* {
+    opacity: 1;
+    filter: blur(0);
+    clip-path: inset(0 0 0 0);
+    transform: translate3d(0, 0, 0);
+  }
+
+
+  .hero-carousel.motion-primed .hero-slide__button {
+    transition:
+      opacity 620ms ease,
+      filter 620ms ease,
+      clip-path var(--motion-copy-duration) var(--motion-ease),
+      transform var(--motion-copy-duration) var(--motion-ease),
+      color var(--transition),
+      background-color var(--transition),
+      box-shadow var(--transition);
+  }
+
+  .hero-carousel.motion-primed.is-ready .slick-current .hero-slide__content> :nth-child(1) {
+    transition-delay: 160ms;
+  }
+
+  .hero-carousel.motion-primed.is-ready .slick-current .hero-slide__content> :nth-child(2) {
+    transition-delay: 255ms;
+  }
+
+  .hero-carousel.motion-primed.is-ready .slick-current .hero-slide__content> :nth-child(3) {
+    transition-delay: 350ms;
+  }
+
+
+  .hero-carousel.motion-primed.is-ready .slick-current .hero-slide__content> :nth-child(3).hero-slide__button {
+    transition-delay: 350ms, 350ms, 350ms, 350ms, 0ms, 0ms, 0ms;
+  }
+
+  .hero-carousel.motion-primed.is-transitioning .slick-slide:not(.slick-current) .hero-slide__content>* {
+    transition-delay: 0ms;
+  }
+
+  .hero-carousel.motion-primed .slick-slide:not(.slick-current) .hero-slide__button {
+    pointer-events: none;
+  }
+
+  .hero-slide__wash {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    pointer-events: none;
+
+    background:
+      linear-gradient(90deg,
+        rgba(237, 233, 224, 0.96) 0%,
+        rgba(237, 233, 224, 0.87) 26%,
+        rgba(237, 233, 224, 0.42) 44%,
+        rgba(237, 233, 224, 0) 75%)
+  }
+
+  .hero-slide__content {
+    position: absolute;
+    top: 50%;
+    left: var(--content-left);
+    width: min(var(--content-width), calc(100% - 3.5rem));
+    transform: translateY(-45%);
+  }
+
+  .hero-slide h1,
+  .hero-slide h2 {
+    margin: 0 0 0.75rem;
+    color: var(--color-forest);
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 2.35vw, 2.25rem);
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -0.025em;
+  }
+
+  .hero-slide p {
+    max-width: 19.25rem;
+    margin: 0 0 1.15rem;
+    color: var(--color-forest-dark);
+    font-size: clamp(0.78rem, 1.03vw, 1rem);
+    font-weight: 400;
+    line-height: 1.55;
+    letter-spacing: -0.01em;
+  }
+
+  .hero-slide__button {
+    display: inline-flex;
+    min-height: 2.7rem;
+    padding: 0.25rem 1.35rem;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--color-forest);
+    border-radius: 0.2rem;
+    color: var(--color-white);
+    background: var(--color-forest);
+    box-shadow: 0 0.1rem 0.25rem rgba(0, 45, 35, 0.12);
+    font-family: var(--font-body);
+    font-size: 0.66rem;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color var(--transition), background-color var(--transition), box-shadow var(--transition);
+  }
+
+  .hero-slide__button:hover {
+    color: var(--color-forest);
+    background: var(--color-white);
+    box-shadow: 0 0.2rem 0.7rem rgba(0, 45, 35, 0.14);
+  }
+
+  .hero-slide__button:focus-visible,
+  .carousel-arrow:focus-visible,
+  .carousel-toggle:focus-visible,
+  .slick-dots button:focus-visible {
+    outline: 2px solid var(--color-white);
+    outline-offset: 3px;
+    box-shadow: 0 0 0 4px var(--color-forest);
+  }
+
+  .hero-carousel .slick-prev,
+  .hero-carousel .slick-next {
+    z-index: 4;
+    width: 2.6rem;
+    height: 2.6rem;
+    border: 1px solid rgba(255, 255, 255, 0.76);
+    border-radius: 50%;
+    background: rgba(0, 75, 59, 0.4);
+    opacity: 1;
+    transition: opacity var(--transition), background-color var(--transition);
+  }
+
+  .hero:hover .slick-prev,
+  .hero:hover .slick-next,
+  .hero-carousel .slick-prev:focus-visible,
+  .hero-carousel .slick-next:focus-visible {
+    opacity: 1;
+  }
+
+  .hero-carousel .slick-prev {
+    left: 1rem;
+  }
+
+  .hero-carousel .slick-next {
+    right: 1rem;
+  }
+
+  .hero-carousel .slick-prev::before,
+  .hero-carousel .slick-next::before {
+    content: none;
+  }
+
+  .carousel-arrow:hover {
+    background: rgba(0, 75, 59, 0.76);
+  }
+
+  .carousel-arrow svg {
+    display: block;
+    width: 1.05rem;
+    height: 1.05rem;
+    margin: auto;
+    fill: none;
+    stroke: var(--color-white);
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.7;
+  }
+
+  .hero-carousel .slick-dots {
+    right: 46%;
+    bottom: var(--control-bottom);
+    left: auto;
+    z-index: 5;
+    display: flex;
+    width: auto;
+    height: 1.25rem;
+    margin: 0;
+    align-items: center;
+    gap: 0.32rem;
+  }
+
+  .hero-carousel .slick-dots li {
+    width: 0.42rem;
+    height: 0.42rem;
+    margin: 0;
+  }
+
+  .hero-carousel .slick-dots li button {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: var(--color-dot);
+    font-size: 0;
+    line-height: 0;
+    transition: background-color var(--transition), transform var(--transition);
+  }
+
+  .hero-carousel .slick-dots li button::before {
+    content: none;
+  }
+
+  .hero-carousel .slick-dots li.slick-active button {
+    background: var(--color-forest);
+    transform: scale(1.05);
+  }
+
+  .carousel-toggle {
+    display: none;
+    position: absolute;
+    right: 1.35rem;
+    bottom: calc(var(--control-bottom) + 0.09rem);
+    z-index: 6;
+    width: 1.25rem;
+    height: 1.25rem;
+    padding: 0;
+    border: 0;
+    color: var(--color-forest);
+    background: transparent;
+    cursor: pointer;
+  }
+
+  .carousel-toggle__pause {
+    position: absolute;
+    inset: 0.27rem 0.32rem;
+    border-right: 0.18rem solid currentColor;
+    border-left: 0.18rem solid currentColor;
+  }
+
+  .carousel-toggle__play {
+    display: none;
+    position: absolute;
+    top: 0.24rem;
+    left: 0.38rem;
+    width: 0;
+    height: 0;
+    border-top: 0.38rem solid transparent;
+    border-bottom: 0.38rem solid transparent;
+    border-left: 0.58rem solid currentColor;
+  }
+
+  .carousel-toggle.is-paused .carousel-toggle__pause {
+    display: none;
+  }
+
+  .carousel-toggle.is-paused .carousel-toggle__play {
+    display: block;
+  }
+
+  .sr-only {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+  }
+
+  noscript {
+    display: block;
+    padding: 1rem;
+    color: var(--color-white);
+    background: var(--color-forest-dark);
+    font: 500 0.875rem/1.5 var(--font-body);
+    text-align: center;
+  }
+
+  .bnr-xs {
+    display: none !important;
+  }
+
+  @media (max-width: 64rem) {
+    :root {
+      --hero-height: calc(100vh - 100px);
+    }
+
+    .hero-slide__wash {
+      background: linear-gradient(90deg,
+          rgba(250, 248, 241, 0.96) 0%,
+          rgba(250, 248, 241, 0.82) 24%,
+          rgba(250, 248, 241, 0.24) 52%,
+          rgba(250, 248, 241, 0) 70%);
+    }
+
+    .hero-slide__image--bags,
+    .hero-slide__image--refills {
+      object-position: 63% center;
+    }
+  }
+
+  @media (max-width: 47.9375rem) {
+    :root {
+      --hero-height: calc(100vh - 100px);
+      --content-left: 1.5rem;
+      --control-bottom: 0.95rem;
+    }
+
+    .bnr-xl {
+      display: none !important;
+    }
+
+    .bnr-xs {
+      display: block !important;
+    }
+
+    .hero-slide__image--bags,
+    .hero-slide__image--refills {
+      object-position: 64% center;
+    }
+
+    .hero-slide__wash {
+      background:
+        linear-gradient(0deg,
+          rgba(250, 248, 241, 0.98) 0%,
+          rgba(250, 248, 241, 0.89) 30%,
+          rgba(250, 248, 241, 0.22) 62%,
+          rgba(250, 248, 241, 0) 78%);
+    }
+
+    .hero-slide__content {
+      top: auto;
+      bottom: 3.45rem;
+      width: min(21rem, calc(100% - 3rem));
+      transform: none;
+    }
+
+    .hero-slide h1,
+    .hero-slide h2 {
+      margin-bottom: 0.65rem;
+      font-size: clamp(2rem, 9vw, 2.65rem);
+    }
+
+    .hero-slide p {
+      margin-bottom: 1rem;
+      font-size: 0.8rem;
+    }
+
+    .hero-slide__button {
+      min-height: 2.65rem;
+      padding-inline: 1.1rem;
+      font-size: 0.61rem;
+    }
+
+    .hero-carousel .slick-prev {
+      left: 0.65rem;
+    }
+
+    .hero-carousel .slick-next {
+      right: 0.65rem;
+    }
+  }
+
+  @media (hover: none) {
+
+    .hero-carousel .slick-prev,
+    .hero-carousel .slick-next {
+      display: inline-block;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+
+    .hero *,
+    .hero *::before,
+    .hero *::after {
+      scroll-behavior: auto !important;
+      transition-duration: 0.01ms !important;
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+    }
+
+    .hero-carousel.motion-primed .hero-slide__image,
+    .hero-carousel.motion-primed.is-ready .slick-current .hero-slide__image,
+    .hero-carousel.motion-primed .hero-slide__wash,
+    .hero-carousel.motion-primed.is-ready .slick-current .hero-slide__wash,
+    .hero-carousel.motion-primed .hero-slide__content>*,
+    .hero-carousel.motion-primed.is-ready .slick-current .hero-slide__content>* {
+      opacity: 1 !important;
+      filter: none !important;
+      clip-path: none !important;
+      transform: none !important;
+    }
+  }
+</style>
+<section class="hero" aria-label="Featured sustainable cleaning products">
+  <div class="hero-carousel" role="region" aria-roledescription="carousel" aria-label="Featured promotions">
+    <article class="hero-slide" aria-label="Slide 1 of 3">
+      <!-- Replace this URL with the final 1600×580-or-larger campaign image. -->
+      <img class="hero-slide__image hero-slide__image--bags bnr-xl"
+        src="https://cdn.shopify.com/s/files/1/0278/0240/2903/files/cln-slide1-bg.webp?v=1785994398" alt="" width="1600"
+        height="768" fetchpriority="high">
+      <img class="hero-slide__image hero-slide__image--bags bnr-xs"
+        src="https://cdn.shopify.com/s/files/1/0278/0240/2903/files/cln-xs-slide1-opt.webp?v=1786278884" alt=""
+        width="579" height="1030" fetchpriority="high">
+      <div class="hero-slide__wash" aria-hidden="true"></div>
+      <div class="hero-slide__content">
+        <h2>Kinder habits start at home</h2>
+        <p>Thoughtfully designed everyday essentials that help care for the planet & your home - without changing your
+          routine.</p>
+        <a class="hero-slide__button" href="/collections/all">Shop Everyday Essentials</a>
+      </div>
+    </article>
+
+    <article class="hero-slide" aria-label="Slide 2 of 3">
+      <!-- Replace this URL with the final 1600×580-or-larger campaign image. -->
+      <img class="hero-slide__image hero-slide__image--refills bnr-xl"
+        src="https://cdn.shopify.com/s/files/1/0278/0240/2903/files/cln-slide2-bg.webp?v=1785994399" alt="" width="1600"
+        height="768" loading="lazy">
+      <img class="hero-slide__image hero-slide__image--refills bnr-xs"
+        src="https://cdn.shopify.com/s/files/1/0278/0240/2903/files/cln-xs-slide2-opt.webp?v=1786278883" alt=""
+        width="579" height="1030" loading="lazy">
+      <div class="hero-slide__wash" aria-hidden="true"></div>
+      <div class="hero-slide__content">
+        <h2>Never run out of your go-to bags again</h2>
+        <p>Build your Eco Bags Bundle and enjoy Free Kitchen Waste Bags for Life. <sup
+            style="display:inline-block">*With Subscription</sup></p>
+        <a class="hero-slide__button" href="/pages/eco-bags-bundle">Shop Eco Bags Bundle</a>
+      </div>
+    </article>
+
+    <article class="hero-slide" aria-label="Slide 3 of 3">
+      <!-- Replace this URL with the final 1600×580-or-larger campaign image. -->
+      <img class="hero-slide__image hero-slide__image--refills bnr-xl"
+        src="https://cdn.shopify.com/s/files/1/0278/0240/2903/files/cln-slide3-bg.webp?v=1785994399" alt="" width="1600"
+        height="768" loading="lazy">
+      <img class="hero-slide__image hero-slide__image--refills bnr-xs"
+        src="https://cdn.shopify.com/s/files/1/0278/0240/2903/files/cln-xs-slide3-opt.webp?v=1786278884" alt=""
+        width="579" height="1030" loading="lazy">
+      <div class="hero-slide__wash" aria-hidden="true"></div>
+      <div class="hero-slide__content">
+        <h2>Make every day feel effortless</h2>
+        <p>From laundry to lunches, simplify the everyday routines that keep your home running smoothly.</p>
+        <a class="hero-slide__button" href="/pages/laundry-starter-kit">Shop Laundry</a>
+      </div>
+    </article>
+  </div>
+
+  <button class="carousel-toggle" type="button" aria-label="Pause carousel autoplay" aria-pressed="false">
+    <span class="carousel-toggle__pause" aria-hidden="true"></span>
+    <span class="carousel-toggle__play" aria-hidden="true"></span>
+  </button>
+  <p class="sr-only carousel-status" aria-live="polite" aria-atomic="true"></p>
+</section>
+
+<script>
+  $(document).on('ready', function () {
+    (function ($) {
+      "use strict";
+
+      if (!$ || !$.fn || typeof $.fn.slick !== "function") {
+        console.error("Carousel dependencies could not be loaded. Check the network connection or CDN access.");
+        return;
+      }
+
+      const $carousel = $(".hero-carousel");
+      const $toggle = $(".carousel-toggle");
+      const $status = $(".carousel-status");
+      const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
+      const prefersReducedMotion = motionPreference.matches;
+
+      const previousArrow = `
+    <button type="button" class="slick-prev carousel-arrow" aria-label="View previous slide">
+      <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+        <path d="M12.5 4.5 7 10l5.5 5.5"></path>
+      </svg>
+    </button>`;
+
+      const nextArrow = `
+    <button type="button" class="slick-next carousel-arrow" aria-label="View next slide">
+      <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false">
+        <path d="m7.5 4.5 5.5 5.5-5.5 5.5"></path>
+      </svg>
+    </button>`;
+
+      function updateDotLabels(slick) {
+        const slideCount = slick.slideCount;
+
+        $carousel.find(".slick-dots button").each(function (index) {
+          $(this).attr("aria-label", `Go to slide ${index + 1} of ${slideCount}`);
+        });
+      }
+
+      function updateStatus(currentSlide, slideCount) {
+        $status.text(`Slide ${currentSlide + 1} of ${slideCount}`);
+      }
+
+      function setToggleState(isPaused) {
+        $toggle.toggleClass("is-paused", isPaused).attr({
+          "aria-label": isPaused ? "Start carousel autoplay" : "Pause carousel autoplay",
+          "aria-pressed": isPaused ? "true" : "false"
+        });
+      }
+
+      function revealInitialSlide() {
+        $carousel.addClass("motion-primed");
+
+        // Two frames give the browser time to paint the prepared state before
+        // animating the first slide into place.
+        window.requestAnimationFrame(function () {
+          window.requestAnimationFrame(function () {
+            $carousel.addClass("is-ready");
+          });
+        });
+      }
+
+      $carousel
+        .addClass("hero-carousel--cinematic")
+        .on("init reInit", function (_event, slick) {
+          updateStatus(slick.currentSlide, slick.slideCount);
+          revealInitialSlide();
+
+          // Slick applies some of its own ARIA attributes immediately after the
+          // init event, so label the dots on the next frame to avoid being reset.
+          window.requestAnimationFrame(function () {
+            updateDotLabels(slick);
+          });
+
+          if (prefersReducedMotion) {
+            // Call the instance directly here; the jQuery method proxy is not
+            // guaranteed to be available until initialization has returned.
+            slick.slickPause();
+            setToggleState(true);
+          }
+        })
+        .on("beforeChange", function () {
+          $carousel.addClass("is-transitioning");
+        })
+        .on("afterChange", function (_event, slick, currentSlide) {
+          $carousel.removeClass("is-transitioning");
+          updateStatus(currentSlide, slick.slideCount);
+        });
+
+      $carousel.slick({
+        accessibility: true,
+        adaptiveHeight: false,
+        arrows: true,
+        autoplay: !prefersReducedMotion,
+        autoplaySpeed: 10000,
+        cssEase: "cubic-bezier(0.22, 1, 0.36, 1)",
+        dots: true,
+        draggable: true,
+        fade: true,
+        infinite: true,
+        pauseOnDotsHover: true,
+        pauseOnFocus: true,
+        pauseOnHover: true,
+        prevArrow: previousArrow,
+        nextArrow: nextArrow,
+        rows: 0,
+        slidesToScroll: 1,
+        slidesToShow: 1,
+        speed: prefersReducedMotion ? 0 : 1050,
+        swipe: true,
+        touchMove: true,
+        touchThreshold: 8,
+        useCSS: true,
+        useTransform: true,
+        waitForAnimate: true,
+        zIndex: 3,
+        responsive: [
+          {
+            breakpoint: 768,
+            settings: {
+              speed: prefersReducedMotion ? 0 : 850
+            }
+          }
+        ]
+      });
+
+      $toggle.on("click", function () {
+        const isPaused = $toggle.hasClass("is-paused");
+
+        if (isPaused) {
+          $carousel.slick("slickPlay");
+          setToggleState(false);
+          $status.text("Carousel autoplay started");
+        } else {
+          $carousel.slick("slickPause");
+          setToggleState(true);
+          $status.text("Carousel autoplay paused");
+        }
+      });
+    })(window.jQuery);
+
+  });
+</script>

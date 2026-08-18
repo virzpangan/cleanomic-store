@@ -49,12 +49,16 @@
     font-weight: 700;
 }
 
-/* Hide bundle link on desktop */
-.site-nav__item:nth-child(3) {
-    display: none !important;
-}
-
 /* ============ General =============*/
+
+.pm-code {
+    border-radius: 10px;
+    background-color: #185741;
+    padding: 3px 8px;
+    color: #fff;
+    font-weight: 700;
+    font-size: 14px;
+}
 
 .rc_widget__option__plans p {
     white-space: normal;
@@ -1507,7 +1511,7 @@
 }
 
 .coll-main-banner .wrapper {
-    max-width: 460px;
+    max-width: 600px;
 }
 
 .coll-main-banner h2 {
@@ -1517,7 +1521,7 @@
     line-height: 50px;
     letter-spacing: -0.04em;
     color: #F6F3EC;
-    max-width: 352px;
+    max-width: 430px;
     margin-bottom: 28px;
 }
 
@@ -1527,6 +1531,10 @@
     font-size: 19px;
     line-height: 30px;
     color: #F6F3EC;
+}
+
+.coll-main-banner p b {
+    font-weight: 500;
 }
 
 .coll-main-breadcrumbs {
@@ -2517,13 +2525,15 @@
     }
 
     .coll-main-banner h2 {
-        max-width: 220px;
         text-align: center;
         margin: auto;
     }
 
     .coll-main-banner p {
-        display: none;
+        background: #00000075;
+        padding: 10px;
+        border-radius: 5px;
+        text-align: center;
     }
 
     .coll-main-breadcrumbs {
@@ -2764,9 +2774,17 @@
     background: rgba(171, 175, 161, .3);
 }
 
-.banner {
+.promo-banner {
     background-color: #EDE9E0;
     overflow: hidden;
+    margin-top: 100px;
+    padding-top: 43%;
+    height: 0;
+    background-image: url('https://cdn.shopify.com/s/files/1/0278/0240/2903/files/xl-fathersday-banner.webp?v=1781329129');
+    background-size: contain;
+    background-repeat: no-repeat;
+    pointer-events: all;
+    cursor: pointer;
 }
 
 .banner .d-flex {
@@ -3373,23 +3391,27 @@
 
 /*============ Recharge New Structure ============*/
 .rc-checkbox__label {
-    line-height: 1.4!important;
-    font-size: 12px!important;
+    line-height: 1.4 !important;
+    font-size: 12px !important;
     letter-spacing: 1px;
 }
-.rc_widget__option__plans__dropdown{
-  font-weight: 500!important;
+
+.rc_widget__option__plans__dropdown {
+    font-weight: 500 !important;
 }
+
 .rc-checkbox {
-  width: 100%;
+    width: 100%;
     border-radius: 5px;
     background-color: #383838;
     padding: 10px 10px 10px 15px;
-  margin-bottom: 8px!important;
+    margin-bottom: 8px !important;
 }
+
 .rc-option__text {
     color: #fff;
 }
+
 .rc-option__descriptor {
     color: #fff;
 }
@@ -3407,8 +3429,8 @@ input#rc-checkbox__1:checked::before {
 
 input#rc-checkbox__1::before {
     content: "";
-    width: 3.65em!important;
-    height: 3.65em!important;
+    width: 3.65em !important;
+    height: 3.65em !important;
     transform: scale(0);
     transition: 120ms transform ease-in-out;
 }
@@ -3418,8 +3440,8 @@ input#rc-checkbox__1::before {
     align-items: center;
 }
 
-.rc-selling-plans__label{
-display:none
+.rc-selling-plans__label {
+    display: none
 }
 
 @media screen and (min-width: 768px) {
@@ -3569,6 +3591,12 @@ display:none
 @media screen and (max-width: 589px) {}
 
 @media screen and (max-width: 579px) {
+    .promo-banner {
+        margin-top: 89px;
+        padding-top: 67%;
+        background-image: url('https://cdn.shopify.com/s/files/1/0278/0240/2903/files/xs-fathersday-banner.webp?v=1781329128');
+    }
+
     .banner .wrapper {
         max-width: 350px;
         padding-top: 35px;

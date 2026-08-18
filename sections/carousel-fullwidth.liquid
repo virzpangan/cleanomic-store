@@ -1,0 +1,1188 @@
+{% comment %}
+  Cleanomic static full-width carousel
+
+  This is a traditional static Liquid section. It has no schema, JSON settings,
+  or Theme Editor blocks. Edit the configuration values below directly.
+
+  IMPORTANT: Each slide list uses ~ as its separator. Keep the same number of
+  values, in the same order, across every slide list.
+{% endcomment %}
+
+{% liquid
+  # SECTION OPTIONS
+  assign accessibility_label = 'Featured Cleanomic collections'
+  assign display_width = 'full-width'
+  assign desktop_height = 650
+  assign mobile_height = 520
+  assign autoplay = true
+  assign autoplay_speed_seconds = 6
+  assign show_arrows = true
+  assign show_pagination = true
+  assign show_counter = true
+
+  # SLIDE CONTENT
+  assign slide_desktop_images_string = 'https://cdn.shopify.com/s/files/1/0278/0240/2903/files/compostable.jpg?v=1656683490~https://cdn.shopify.com/s/files/1/0278/0240/2903/files/laundry-earthwash-1.jpg?v=1718410176~https://cdn.shopify.com/s/files/1/0278/0240/2903/files/soap-bottle.jpg?v=1657246905~https://cdn.shopify.com/s/files/1/0278/0240/2903/files/cleaning-bottle.jpg?v=1657246905'
+  assign slide_mobile_images_string = 'https://cdn.shopify.com/s/files/1/0278/0240/2903/files/compostable.jpg?v=1656683490~https://cdn.shopify.com/s/files/1/0278/0240/2903/files/laundry-earthwash-1.jpg?v=1718410176~https://cdn.shopify.com/s/files/1/0278/0240/2903/files/soap-bottle.jpg?v=1657246905~https://cdn.shopify.com/s/files/1/0278/0240/2903/files/cleaning-bottle.jpg?v=1657246905'
+  assign slide_alts_string = 'Compostable food-storage essentials arranged on a kitchen counter~Cleanomic Earthwash laundry sheets beside freshly washed linens~A refillable hand-soap bottle in a bright bathroom~A reusable cleaning spray bottle in a modern home'
+  assign slide_eyebrows_string = 'Kitchen essentials~Laundry essentials~Bathroom essentials~Cleaning essentials'
+  assign slide_headings_string = 'Less waste. More everyday ease.~Fresh laundry, lighter footprint.~Refill your routine—not the landfill.~Clean effectively. Live thoughtfully.'
+  assign slide_descriptions_string = 'Convenient, planet-conscious alternatives designed for the way your household really lives.~Powerful everyday laundry care without the bulky plastic jug or unnecessary waste.~Simple refillable solutions that help reduce single-use plastic one wash at a time.~Effective home-care essentials made to support a cleaner space and a more thoughtful routine.'
+  assign slide_primary_labels_string = 'Shop kitchen~Shop laundry~Shop bathroom~Shop cleaning'
+  assign slide_primary_urls_string = '/collections/kitchen~/collections/laundry~/collections/bathroom~/collections/cleaning'
+  assign slide_secondary_labels_string = 'none~none~none~none'
+  assign slide_secondary_urls_string = 'none~none~none~none'
+  assign slide_links_string = '/collections/kitchen~/collections/laundry~/collections/bathroom~/collections/cleaning'
+
+  # SLIDE APPEARANCE
+  assign slide_text_alignments_string = 'left~left~left~left'
+  assign slide_content_positions_string = 'center~center~center~center'
+  assign slide_text_colors_string = '#FFFFFF~#FFFFFF~#FFFFFF~#FFFFFF'
+  assign slide_overlay_colors_string = '#14392B~#14392B~#14392B~#14392B'
+  assign slide_overlay_opacities_string = '38~38~38~38'
+  assign slide_desktop_positions_string = 'center center~center center~center center~center center'
+  assign slide_mobile_positions_string = 'center center~center center~center center~center center'
+
+  # BUILD THE SLIDE LISTS
+  assign slide_desktop_images = slide_desktop_images_string | split: '~'
+  assign slide_mobile_images = slide_mobile_images_string | split: '~'
+  assign slide_alts = slide_alts_string | split: '~'
+  assign slide_eyebrows = slide_eyebrows_string | split: '~'
+  assign slide_headings = slide_headings_string | split: '~'
+  assign slide_descriptions = slide_descriptions_string | split: '~'
+  assign slide_primary_labels = slide_primary_labels_string | split: '~'
+  assign slide_primary_urls = slide_primary_urls_string | split: '~'
+  assign slide_secondary_labels = slide_secondary_labels_string | split: '~'
+  assign slide_secondary_urls = slide_secondary_urls_string | split: '~'
+  assign slide_links = slide_links_string | split: '~'
+  assign slide_text_alignments = slide_text_alignments_string | split: '~'
+  assign slide_content_positions = slide_content_positions_string | split: '~'
+  assign slide_text_colors = slide_text_colors_string | split: '~'
+  assign slide_overlay_colors = slide_overlay_colors_string | split: '~'
+  assign slide_overlay_opacities = slide_overlay_opacities_string | split: '~'
+  assign slide_desktop_positions = slide_desktop_positions_string | split: '~'
+  assign slide_mobile_positions = slide_mobile_positions_string | split: '~'
+  assign slide_count = slide_headings.size
+%}
+
+{% comment %} Styling {% endcomment %}
+{% style %}
+  #CleanomicCarousel-{{ section.id }} {
+    --carousel-desktop-height: {{ desktop_height }}px;
+    --carousel-mobile-height: {{ mobile_height }}px;
+    --carousel-edge-padding: clamp(40px, 5vw, 64px);
+    --carousel-content-width: 600px;
+    --carousel-forest: #185741;
+    --carousel-dark-green: #14392b;
+    --carousel-off-white: #f7f4ec;
+    --carousel-sage: #dce8df;
+    --carousel-white: #ffffff;
+    --carousel-control-color: #ffffff;
+    --carousel-control-surface: rgba(20, 57, 43, 0.58);
+    --carousel-control-muted: rgba(255, 255, 255, 0.52);
+    position: relative;
+    display: block;
+    color: var(--carousel-white);
+    font-family: var(--font-body-family, inherit);
+    font-style: var(--font-body-style, normal);
+  }
+
+  #CleanomicCarousel-{{ section.id }} *,
+  #CleanomicCarousel-{{ section.id }} *::before,
+  #CleanomicCarousel-{{ section.id }} *::after {
+    box-sizing: border-box;
+  }
+
+  #CleanomicCarousel-{{ section.id }}.cleanomic-carousel--full-width {
+    width: 100vw;
+    max-width: 100vw;
+    margin-inline: calc(50% - 50vw);
+  }
+
+  #CleanomicCarousel-{{ section.id }}.cleanomic-carousel--contained {
+    width: min(calc(100% - 4rem), var(--page-width, 144rem));
+    margin-inline: auto;
+  }
+
+  #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__viewport {
+    position: relative;
+    height: var(--carousel-desktop-height);
+    overflow: hidden;
+    isolation: isolate;
+    background: var(--carousel-sage);
+  }
+
+  #CleanomicCarousel-{{ section.id }}.cleanomic-carousel--contained .cleanomic-carousel__viewport {
+    border-radius: 0.2rem;
+  }
+
+  #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__track {
+    display: flex;
+    width: 100%;
+    height: var(--carousel-desktop-height);
+    transform: translate3d(0, 0, 0);
+    transition: none;
+    will-change: transform;
+    touch-action: pan-y;
+  }
+
+  #CleanomicCarousel-{{ section.id }}[data-ready='true'] .cleanomic-carousel__track {
+    transition: transform 620ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+
+  #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__slide {
+    --responsive-object-position: var(--desktop-object-position, center center);
+    position: relative;
+    flex: 0 0 100%;
+    width: 100%;
+    min-width: 0;
+    height: var(--carousel-desktop-height);
+    overflow: hidden;
+    color: var(--slide-text-color, #ffffff);
+    background: var(--carousel-sage);
+  }
+
+  #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__media,
+  #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__media picture,
+  #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__image,
+  #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__overlay,
+  #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__slide-link {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__media {
+    z-index: 0;
+    margin: 0;
+  }
+
+  #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__media picture {
+    display: block;
+  }
+
+  #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__image {
+    display: block;
+    object-fit: cover;
+    object-position: var(--responsive-object-position, center center);
+  }
+
+  #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__overlay {
+    z-index: 1;
+    pointer-events: none;
+    background: var(--slide-overlay-color, #14392b);
+    opacity: var(--slide-overlay-opacity, 0.3);
+  }
+
+  #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__slide-link {
+    z-index: 2;
+    display: block;
+  }
+
+  #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__content-wrap {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    width: 100%;
+    max-width: var(--page-width, 144rem);
+    height: var(--carousel-desktop-height);
+    margin-inline: auto;
+    padding: var(--carousel-edge-padding);
+    pointer-events: none;
+  }
+
+  #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__slide--top .cleanomic-carousel__content-wrap {
+    align-items: flex-start;
+  }
+
+  #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__slide--center .cleanomic-carousel__content-wrap {
+    align-items: center;
+  }
+
+  #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__slide--bottom .cleanomic-carousel__content-wrap {
+    align-items: flex-end;
+    padding-bottom: max(10rem, var(--carousel-edge-padding));
+  }
+
+  #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__content {
+    width: min(100%, var(--carousel-content-width));
+    pointer-events: auto;
+  }
+
+  #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__slide--left .cleanomic-carousel__content {
+    margin-right: auto;
+    text-align: left;
+  }
+
+  #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__slide--centered .cleanomic-carousel__content {
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__slide--right .cleanomic-carousel__content {
+    margin-left: auto;
+    text-align: right;
+  }
+
+  #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__eyebrow {
+    margin: 0 0 1.4rem;
+    color: inherit;
+    font: inherit;
+    font-size: clamp(1.1rem, 1.1vw, 1.3rem);
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__heading {
+    max-width: 100%;
+    margin: 0;
+    color: inherit;
+    font-family: var(--font-heading-family, inherit);
+    font-size: clamp(34px, 5vw, 60px);
+    font-style: var(--font-heading-style, normal);
+    font-weight: var(--font-heading-weight, 500);
+    line-height: 1.04;
+    letter-spacing: -0.025em;
+    text-wrap: balance;
+  }
+
+  #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__description {
+    max-width: 54rem;
+    margin-top: 2rem;
+    color: inherit;
+    font-size: clamp(16px, 1.45vw, 19px);
+    line-height: 1.6;
+  }
+
+  #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__slide--centered .cleanomic-carousel__description {
+    margin-inline: auto;
+  }
+
+  #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__slide--right .cleanomic-carousel__description {
+    margin-left: auto;
+  }
+
+  #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__description > * {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__description > * + * {
+    margin-top: 0.9rem;
+  }
+
+  #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+    margin-top: 2.8rem;
+  }
+
+  #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__slide--centered .cleanomic-carousel__actions {
+    justify-content: center;
+  }
+
+  #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__slide--right .cleanomic-carousel__actions {
+    justify-content: flex-end;
+  }
+
+  #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 4.8rem;
+    padding: 1.3rem 2.4rem;
+    border: 0.1rem solid transparent;
+    border-radius: 0.4rem;
+    box-shadow: none;
+    font-family: var(--font-body-family, inherit);
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: 0.01em;
+    text-align: center;
+    text-decoration: none;
+    transition: color 180ms ease, background-color 180ms ease, border-color 180ms ease, transform 180ms ease;
+  }
+
+  #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__button--primary {
+    color: var(--carousel-white);
+    background: var(--carousel-forest);
+    border-color: var(--carousel-forest);
+  }
+
+  #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__button--primary:hover {
+    color: var(--carousel-white);
+    background: var(--carousel-dark-green);
+    border-color: var(--carousel-dark-green);
+    transform: translateY(-0.1rem);
+  }
+
+  #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__button--secondary {
+    color: inherit;
+    background: rgba(255, 255, 255, 0.08);
+    border-color: currentColor;
+  }
+
+  #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__button--secondary:hover {
+    color: var(--carousel-dark-green);
+    background: var(--carousel-off-white);
+    border-color: var(--carousel-off-white);
+    transform: translateY(-0.1rem);
+  }
+
+  #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__arrow,
+  #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__pagination,
+  #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__counter {
+    position: absolute;
+    z-index: 5;
+    color: var(--carousel-control-color);
+    background: var(--carousel-control-surface);
+    border: 0.1rem solid var(--carousel-control-muted);
+    backdrop-filter: blur(0.8rem);
+    -webkit-backdrop-filter: blur(0.8rem);
+  }
+
+  #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__arrow {
+    top: 50%;
+    display: inline-grid;
+    place-items: center;
+    width: 4.8rem;
+    height: 4.8rem;
+    padding: 0;
+    border-radius: 50%;
+    cursor: pointer;
+    transform: translateY(-50%);
+    transition: background-color 180ms ease, transform 180ms ease;
+  }
+
+  #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__arrow:hover {
+    transform: translateY(-50%) scale(1.04);
+  }
+
+  #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__arrow--previous {
+    left: var(--carousel-edge-padding);
+  }
+
+  #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__arrow--next {
+    right: var(--carousel-edge-padding);
+  }
+
+  #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__arrow svg {
+    display: block;
+    width: 2rem;
+    height: 2rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.5;
+  }
+
+  #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__pagination {
+    left: 50%;
+    bottom: 2.4rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    min-height: 3.6rem;
+    padding: 0.8rem 1.2rem;
+    border-radius: 2rem;
+    transform: translateX(-50%);
+  }
+
+  #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__dot {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    color: inherit;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__dot::before {
+    width: 0.7rem;
+    height: 0.7rem;
+    border: 0.1rem solid currentColor;
+    border-radius: 50%;
+    background: transparent;
+    content: '';
+    opacity: 0.7;
+    transition: width 180ms ease, background-color 180ms ease, opacity 180ms ease;
+  }
+
+  #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__dot[aria-current='true']::before {
+    width: 1.8rem;
+    border-radius: 1rem;
+    background: currentColor;
+    opacity: 1;
+  }
+
+  #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__counter {
+    right: var(--carousel-edge-padding);
+    bottom: 2.4rem;
+    min-width: 6.8rem;
+    padding: 0.9rem 1.2rem;
+    border-radius: 0.3rem;
+    font-size: 1.2rem;
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: 0.08em;
+    text-align: center;
+  }
+
+  #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__arrow:focus-visible,
+  #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__dot:focus-visible,
+  #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__button:focus-visible,
+  #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__slide-link:focus-visible {
+    outline: 0.3rem solid var(--carousel-off-white);
+    outline-offset: 0.3rem;
+  }
+
+  #CleanomicCarousel-{{ section.id }}:focus-visible {
+    outline: 0.3rem solid var(--carousel-forest);
+    outline-offset: 0.2rem;
+  }
+
+  #CleanomicCarousel-{{ section.id }}[data-slide-count='0'] .cleanomic-carousel__controls,
+  #CleanomicCarousel-{{ section.id }}[data-slide-count='1'] .cleanomic-carousel__controls {
+    display: none;
+  }
+
+  #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__visually-hidden {
+    position: absolute !important;
+    width: 0.1rem !important;
+    height: 0.1rem !important;
+    padding: 0 !important;
+    margin: -0.1rem !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+  }
+
+  #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__empty {
+    display: grid;
+    min-height: 42rem;
+    place-items: center;
+    padding: 4rem 2rem;
+    color: var(--carousel-dark-green);
+    background: var(--carousel-sage);
+    text-align: center;
+  }
+
+  @media screen and (max-width: 749px) {
+    #CleanomicCarousel-{{ section.id }} {
+      --carousel-edge-padding: 20px;
+    }
+
+    #CleanomicCarousel-{{ section.id }}.cleanomic-carousel--contained {
+      width: calc(100% - 2rem);
+    }
+
+    #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__viewport,
+    #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__track,
+    #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__slide,
+    #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__content-wrap {
+      height: var(--carousel-mobile-height);
+    }
+
+    #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__slide {
+      --responsive-object-position: var(--mobile-object-position, var(--desktop-object-position, center center));
+    }
+
+    #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__content-wrap {
+      padding: 4rem var(--carousel-edge-padding) 8.8rem;
+    }
+
+    #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__slide--top .cleanomic-carousel__content-wrap {
+      padding-top: 4rem;
+    }
+
+    #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__slide--bottom .cleanomic-carousel__content-wrap {
+      padding-bottom: 9.6rem;
+    }
+
+    #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__eyebrow {
+      margin-bottom: 1.1rem;
+      font-size: 1.1rem;
+    }
+
+    #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__heading {
+      font-size: clamp(34px, 10vw, 44px);
+      line-height: 1.06;
+    }
+
+    #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__description {
+      margin-top: 1.6rem;
+      font-size: 16px;
+      line-height: 1.55;
+    }
+
+    #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__actions {
+      gap: 1rem;
+      margin-top: 2.2rem;
+    }
+
+    #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__button {
+      min-height: 4.8rem;
+      padding-inline: 2rem;
+    }
+
+    #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__arrow {
+      top: auto;
+      bottom: 2rem;
+      width: 4.8rem;
+      height: 4.8rem;
+      transform: none;
+    }
+
+    #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__arrow:hover {
+      transform: scale(1.03);
+    }
+
+    #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__arrow--previous {
+      left: 2rem;
+    }
+
+    #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__arrow--next {
+      right: 2rem;
+    }
+
+    #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__pagination {
+      bottom: 2.6rem;
+    }
+
+    #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__counter {
+      top: 2rem;
+      right: 2rem;
+      bottom: auto;
+    }
+  }
+
+  @media screen and (max-width: 479px) {
+    #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__actions {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__button {
+      width: 100%;
+    }
+
+    #CleanomicCarousel-{{ section.id }}[data-show-arrows='true'] .cleanomic-carousel__pagination {
+      max-width: calc(100% - 15rem);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    #CleanomicCarousel-{{ section.id }}[data-ready='true'] .cleanomic-carousel__track,
+    #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__button,
+    #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__arrow,
+    #CleanomicCarousel-{{ section.id }} .cleanomic-carousel__dot::before {
+      transition: none;
+    }
+  }
+{% endstyle %}
+
+{% comment %} Liquid and markup {% endcomment %}
+<section
+  id="CleanomicCarousel-{{ section.id }}"
+  class="cleanomic-carousel cleanomic-carousel--{{ display_width }}"
+  data-cleanomic-carousel
+  data-section-id="{{ section.id }}"
+  data-slide-count="{{ slide_count }}"
+  data-autoplay="{{ autoplay }}"
+  data-autoplay-delay="{{ autoplay_speed_seconds | times: 1000 }}"
+  data-show-arrows="{{ show_arrows }}"
+  data-show-pagination="{{ show_pagination }}"
+  role="region"
+  aria-roledescription="carousel"
+  aria-label="{{ accessibility_label | escape }}"
+  tabindex="0"
+>
+  <div class="cleanomic-carousel__viewport" data-carousel-viewport>
+    <div class="cleanomic-carousel__track" data-carousel-track aria-live="off">
+      {% for heading in slide_headings %}
+        {% liquid
+          assign slide_index = forloop.index0
+          assign desktop_image = slide_desktop_images[slide_index]
+          assign mobile_image = slide_mobile_images[slide_index] | default: desktop_image
+          assign image_alt = slide_alts[slide_index]
+          assign eyebrow = slide_eyebrows[slide_index]
+          assign description = slide_descriptions[slide_index]
+          assign primary_label = slide_primary_labels[slide_index]
+          assign primary_url = slide_primary_urls[slide_index]
+          assign secondary_label = slide_secondary_labels[slide_index]
+          assign secondary_url = slide_secondary_urls[slide_index]
+          assign slide_link = slide_links[slide_index]
+          assign text_alignment = slide_text_alignments[slide_index] | default: 'left'
+          assign content_position = slide_content_positions[slide_index] | default: 'center'
+          assign text_color = slide_text_colors[slide_index] | default: '#FFFFFF'
+          assign overlay_color = slide_overlay_colors[slide_index] | default: '#14392B'
+          assign overlay_opacity = slide_overlay_opacities[slide_index] | default: 38
+          assign desktop_position = slide_desktop_positions[slide_index] | default: 'center center'
+          assign mobile_position = slide_mobile_positions[slide_index] | default: desktop_position
+          assign normalized_text_color = text_color | downcase
+          assign control_color = '#185741'
+          assign control_surface = 'rgba(247, 244, 236, 0.9)'
+          assign control_muted = 'rgba(24, 87, 65, 0.35)'
+
+          if normalized_text_color == '#ffffff'
+            assign control_color = '#ffffff'
+            assign control_surface = 'rgba(20, 57, 43, 0.58)'
+            assign control_muted = 'rgba(255, 255, 255, 0.52)'
+          endif
+
+          assign show_primary = false
+          assign show_secondary = false
+
+          if primary_label != blank and primary_label != 'none' and primary_url != blank and primary_url != 'none'
+            assign show_primary = true
+          endif
+
+          if secondary_label != blank and secondary_label != 'none' and secondary_url != blank and secondary_url != 'none'
+            assign show_secondary = true
+          endif
+        %}
+
+        <article
+          class="cleanomic-carousel__slide cleanomic-carousel__slide--{{ content_position }} cleanomic-carousel__slide--{% if text_alignment == 'center' %}centered{% else %}{{ text_alignment }}{% endif %}"
+          data-carousel-slide
+          data-slide-index="{{ slide_index }}"
+          data-slide-label="{{ heading | escape }}"
+          data-control-color="{{ control_color }}"
+          data-control-surface="{{ control_surface }}"
+          data-control-muted="{{ control_muted }}"
+          role="group"
+          aria-roledescription="slide"
+          aria-label="{{ forloop.index }} of {{ slide_count }}"
+          aria-hidden="{% if forloop.first %}false{% else %}true{% endif %}"
+          style="--slide-text-color: {{ text_color }}; --slide-overlay-color: {{ overlay_color }}; --slide-overlay-opacity: {{ overlay_opacity | divided_by: 100.0 }}; --desktop-object-position: {{ desktop_position }}; --mobile-object-position: {{ mobile_position }};"
+        >
+          {% if desktop_image != blank and desktop_image != 'none' %}
+            <figure class="cleanomic-carousel__media">
+              <picture>
+                {% if mobile_image != blank and mobile_image != 'none' %}
+                  <source
+                    media="(max-width: 749px)"
+                    srcset="
+                      {{ mobile_image }}&amp;width=375 375w,
+                      {{ mobile_image }}&amp;width=550 550w,
+                      {{ mobile_image }}&amp;width=750 750w,
+                      {{ mobile_image }}&amp;width=1100 1100w
+                    "
+                    sizes="100vw"
+                  >
+                {% endif %}
+
+                <img
+                  class="cleanomic-carousel__image"
+                  src="{{ desktop_image }}&amp;width=2000"
+                  srcset="
+                    {{ desktop_image }}&amp;width=750 750w,
+                    {{ desktop_image }}&amp;width=1100 1100w,
+                    {{ desktop_image }}&amp;width=1500 1500w,
+                    {{ desktop_image }}&amp;width=2000 2000w,
+                    {{ desktop_image }}&amp;width=2600 2600w,
+                    {{ desktop_image }}&amp;width=3200 3200w
+                  "
+                  sizes="100vw"
+                  alt="{{ image_alt | escape }}"
+                  {% if forloop.first %}
+                    loading="eager"
+                    fetchpriority="high"
+                  {% else %}
+                    loading="lazy"
+                  {% endif %}
+                >
+              </picture>
+            </figure>
+          {% endif %}
+
+          <div class="cleanomic-carousel__overlay" aria-hidden="true"></div>
+
+          {% if slide_link != blank and slide_link != 'none' %}
+            <a
+              class="cleanomic-carousel__slide-link"
+              href="{{ slide_link }}"
+              aria-label="{{ heading | escape }}"
+              {% unless forloop.first %}tabindex="-1"{% endunless %}
+            ></a>
+          {% endif %}
+
+          <div class="cleanomic-carousel__content-wrap">
+            <div class="cleanomic-carousel__content">
+              {% if eyebrow != blank and eyebrow != 'none' %}
+                <p class="cleanomic-carousel__eyebrow">{{ eyebrow | escape }}</p>
+              {% endif %}
+
+              {% if heading != blank and heading != 'none' %}
+                <h2 class="cleanomic-carousel__heading">{{ heading | escape }}</h2>
+              {% endif %}
+
+              {% if description != blank and description != 'none' %}
+                <div class="cleanomic-carousel__description">
+                  <p>{{ description | escape }}</p>
+                </div>
+              {% endif %}
+
+              {% if show_primary or show_secondary %}
+                <div class="cleanomic-carousel__actions">
+                  {% if show_primary %}
+                    <a
+                      class="cleanomic-carousel__button cleanomic-carousel__button--primary"
+                      href="{{ primary_url }}"
+                      {% unless forloop.first %}tabindex="-1"{% endunless %}
+                    >
+                      {{ primary_label | escape }}
+                    </a>
+                  {% endif %}
+
+                  {% if show_secondary %}
+                    <a
+                      class="cleanomic-carousel__button cleanomic-carousel__button--secondary"
+                      href="{{ secondary_url }}"
+                      {% unless forloop.first %}tabindex="-1"{% endunless %}
+                    >
+                      {{ secondary_label | escape }}
+                    </a>
+                  {% endif %}
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+
+    <div class="cleanomic-carousel__controls" aria-label="Carousel controls">
+      {% if show_arrows %}
+        <button
+          class="cleanomic-carousel__arrow cleanomic-carousel__arrow--previous"
+          type="button"
+          aria-label="Previous slide"
+          data-carousel-previous
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M15 18 9 12l6-6"></path>
+          </svg>
+        </button>
+
+        <button
+          class="cleanomic-carousel__arrow cleanomic-carousel__arrow--next"
+          type="button"
+          aria-label="Next slide"
+          data-carousel-next
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="m9 18 6-6-6-6"></path>
+          </svg>
+        </button>
+      {% endif %}
+
+      {% if show_pagination %}
+        <div class="cleanomic-carousel__pagination" data-carousel-pagination aria-label="Choose a slide">
+          {% for heading in slide_headings %}
+            <button
+              class="cleanomic-carousel__dot"
+              type="button"
+              aria-label="Go to slide {{ forloop.index }}"
+              aria-current="{% if forloop.first %}true{% else %}false{% endif %}"
+              data-carousel-dot="{{ forloop.index0 }}"
+            ></button>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      {% if show_counter %}
+        <div class="cleanomic-carousel__counter" data-carousel-counter aria-hidden="true">
+          <span data-carousel-current>01</span>
+          <span aria-hidden="true"> / </span>
+          <span>0{{ slide_count }}</span>
+        </div>
+      {% endif %}
+    </div>
+
+    <p class="cleanomic-carousel__visually-hidden" data-carousel-status aria-live="polite" aria-atomic="true"></p>
+  </div>
+</section>
+
+{% comment %} JavaScript {% endcomment %}
+<script>
+  (() => {
+    const sectionId = {{ section.id | json }};
+    const root = document.getElementById(`CleanomicCarousel-${sectionId}`);
+
+    if (!root || root.dataset.initialized === 'true') return;
+
+    class CleanomicCarousel {
+      constructor(element) {
+        this.root = element;
+        this.viewport = element.querySelector('[data-carousel-viewport]');
+        this.track = element.querySelector('[data-carousel-track]');
+        this.realSlides = Array.from(element.querySelectorAll('[data-carousel-slide]'));
+        this.dots = Array.from(element.querySelectorAll('[data-carousel-dot]'));
+        this.previousButton = element.querySelector('[data-carousel-previous]');
+        this.nextButton = element.querySelector('[data-carousel-next]');
+        this.currentCounter = element.querySelector('[data-carousel-current]');
+        this.status = element.querySelector('[data-carousel-status]');
+        this.index = 0;
+        this.physicalIndex = 0;
+        this.autoplayDelay = Math.max(3000, Number(element.dataset.autoplayDelay) || 6000);
+        this.reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+        this.autoplayEnabled = element.dataset.autoplay === 'true' && !this.reducedMotion.matches;
+        this.pauseReasons = new Set();
+        this.listeners = [];
+        this.timer = null;
+        this.focusFrame = null;
+        this.resizeFrame = null;
+        this.resizeObserver = null;
+        this.clickResetTimer = null;
+        this.drag = null;
+        this.suppressClick = false;
+        this.destroyed = false;
+
+        if (!this.viewport || !this.track || this.realSlides.length === 0) return;
+
+        this.createLoopClones();
+        this.bindEvents();
+        this.update(0, { announce: false, instant: true });
+        this.root.dataset.initialized = 'true';
+        void this.track.offsetWidth;
+        this.root.dataset.ready = 'true';
+        this.startAutoplay();
+      }
+
+      on(target, type, handler, options) {
+        target.addEventListener(type, handler, options);
+        this.listeners.push({ target, type, handler, options });
+      }
+
+      createLoopClones() {
+        if (this.realSlides.length < 2) {
+          this.renderSlides = [...this.realSlides];
+          this.physicalIndex = 0;
+          return;
+        }
+
+        const firstClone = this.realSlides[0].cloneNode(true);
+        const lastClone = this.realSlides[this.realSlides.length - 1].cloneNode(true);
+
+        [firstClone, lastClone].forEach((clone) => {
+          clone.dataset.carouselClone = 'true';
+          clone.removeAttribute('data-shopify-editor-block');
+          clone.setAttribute('aria-hidden', 'true');
+          clone.inert = true;
+          clone.querySelectorAll('[id]').forEach((node) => node.removeAttribute('id'));
+          clone.querySelectorAll('a, button, [tabindex]').forEach((node) => node.setAttribute('tabindex', '-1'));
+          clone.querySelectorAll('img').forEach((image) => {
+            image.loading = 'lazy';
+            image.removeAttribute('fetchpriority');
+          });
+        });
+
+        this.track.insertBefore(lastClone, this.realSlides[0]);
+        this.track.appendChild(firstClone);
+        this.renderSlides = Array.from(this.track.children);
+        this.physicalIndex = 1;
+      }
+
+      bindEvents() {
+        if (this.previousButton) {
+          this.on(this.previousButton, 'click', () => this.step(-1, { announce: true }));
+        }
+
+        if (this.nextButton) {
+          this.on(this.nextButton, 'click', () => this.step(1, { announce: true }));
+        }
+
+        this.dots.forEach((dot) => {
+          this.on(dot, 'click', () => {
+            this.goTo(Number(dot.dataset.carouselDot), { announce: true });
+          });
+        });
+
+        this.on(this.root, 'keydown', (event) => {
+          if (event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+
+          if (event.key === 'ArrowLeft') {
+            event.preventDefault();
+            this.step(-1, { announce: true });
+          }
+
+          if (event.key === 'ArrowRight') {
+            event.preventDefault();
+            this.step(1, { announce: true });
+          }
+        });
+
+        this.on(this.root, 'mouseenter', () => this.pause('hover'));
+        this.on(this.root, 'mouseleave', () => this.resume('hover'));
+        this.on(this.root, 'focusin', () => this.pause('focus'));
+        this.on(this.root, 'focusout', () => {
+          cancelAnimationFrame(this.focusFrame);
+          this.focusFrame = requestAnimationFrame(() => {
+            if (!this.root.contains(document.activeElement)) this.resume('focus');
+          });
+        });
+
+        this.on(document, 'visibilitychange', () => {
+          if (document.hidden) this.pause('visibility');
+          else this.resume('visibility');
+        });
+
+        this.on(this.track, 'transitionend', (event) => {
+          if (event.target === this.track && event.propertyName === 'transform') this.normalizeLoopPosition();
+        });
+
+        this.on(this.viewport, 'pointerdown', (event) => this.handlePointerDown(event));
+        this.on(this.viewport, 'pointermove', (event) => this.handlePointerMove(event));
+        this.on(this.viewport, 'pointerup', (event) => this.handlePointerEnd(event));
+        this.on(this.viewport, 'pointercancel', (event) => this.handlePointerEnd(event));
+        this.on(this.viewport, 'click', (event) => {
+          if (!this.suppressClick) return;
+          event.preventDefault();
+          event.stopPropagation();
+        }, true);
+
+        this.on(this.reducedMotion, 'change', (event) => {
+          if (event.matches) {
+            this.autoplayEnabled = false;
+            this.clearAutoplay();
+          } else {
+            this.autoplayEnabled = this.root.dataset.autoplay === 'true';
+            this.startAutoplay();
+          }
+        });
+
+        if ('ResizeObserver' in window) {
+          this.resizeObserver = new ResizeObserver(() => {
+            cancelAnimationFrame(this.resizeFrame);
+            this.resizeFrame = requestAnimationFrame(() => this.syncTrackWidth());
+          });
+          this.resizeObserver.observe(this.viewport);
+        } else {
+          this.on(window, 'resize', () => this.syncTrackWidth());
+        }
+
+        this.on(document, 'shopify:section:unload', (event) => {
+          if (event.detail && String(event.detail.sectionId) === String(sectionId)) this.destroy();
+        });
+      }
+
+      handlePointerDown(event) {
+        if (event.pointerType === 'mouse' && event.button !== 0) return;
+        if (this.realSlides.length < 2) return;
+
+        this.pause('pointer');
+        this.drag = {
+          id: event.pointerId,
+          startX: event.clientX,
+          startY: event.clientY,
+          deltaX: 0,
+          isHorizontal: false
+        };
+
+        this.viewport.setPointerCapture?.(event.pointerId);
+      }
+
+      handlePointerMove(event) {
+        if (!this.drag || this.drag.id !== event.pointerId) return;
+
+        const deltaX = event.clientX - this.drag.startX;
+        const deltaY = event.clientY - this.drag.startY;
+
+        if (!this.drag.isHorizontal && Math.abs(deltaX) < 8) return;
+        if (!this.drag.isHorizontal && Math.abs(deltaY) > Math.abs(deltaX)) return;
+
+        this.drag.isHorizontal = true;
+        this.drag.deltaX = deltaX;
+        this.track.style.transition = 'none';
+        this.renderTransform(deltaX);
+      }
+
+      handlePointerEnd(event) {
+        if (!this.drag || this.drag.id !== event.pointerId) return;
+
+        const { deltaX, isHorizontal } = this.drag;
+        const threshold = Math.min(90, this.viewport.clientWidth * 0.14);
+        this.drag = null;
+        this.track.style.transition = '';
+
+        if (event.type !== 'pointercancel' && isHorizontal && Math.abs(deltaX) >= threshold) {
+          this.suppressClick = true;
+          this.step(deltaX < 0 ? 1 : -1, { announce: true });
+        } else {
+          this.renderTransform();
+        }
+
+        window.clearTimeout(this.clickResetTimer);
+        this.clickResetTimer = window.setTimeout(() => {
+          this.suppressClick = false;
+        }, 80);
+
+        this.resume('pointer');
+      }
+
+      renderTransform(dragOffset = 0) {
+        const width = this.viewport.clientWidth || this.root.clientWidth;
+        const offset = -(this.physicalIndex * width) + dragOffset;
+        this.track.style.transform = `translate3d(${offset}px, 0, 0)`;
+      }
+
+      syncTrackWidth() {
+        if (this.destroyed) return;
+        this.track.style.transition = 'none';
+        this.renderTransform();
+        void this.track.offsetWidth;
+        this.track.style.transition = '';
+      }
+
+      step(direction, options = {}) {
+        if (this.realSlides.length < 2) return;
+
+        const count = this.realSlides.length;
+        this.normalizeLoopPosition();
+        this.index = (this.index + direction + count) % count;
+        this.physicalIndex += direction;
+        this.renderTransform();
+        this.updateState(options.announce === true);
+
+        if (this.reducedMotion.matches) this.normalizeLoopPosition();
+        this.restartAutoplay();
+      }
+
+      goTo(targetIndex, options = {}) {
+        const count = this.realSlides.length;
+        if (!count) return;
+
+        this.index = ((targetIndex % count) + count) % count;
+        this.physicalIndex = count > 1 ? this.index + 1 : this.index;
+
+        if (options.instant) this.track.style.transition = 'none';
+        this.renderTransform();
+        this.updateState(options.announce === true);
+
+        if (options.instant) {
+          void this.track.offsetWidth;
+          this.track.style.transition = '';
+        }
+
+        this.restartAutoplay();
+      }
+
+      update(targetIndex, options = {}) {
+        this.goTo(targetIndex, options);
+      }
+
+      updateState(announce) {
+        this.realSlides.forEach((slide, slideIndex) => {
+          const isActive = slideIndex === this.index;
+          slide.setAttribute('aria-hidden', String(!isActive));
+          slide.inert = !isActive;
+
+          slide.querySelectorAll('a, button, [tabindex]').forEach((node) => {
+            if (isActive) node.removeAttribute('tabindex');
+            else node.setAttribute('tabindex', '-1');
+          });
+        });
+
+        this.dots.forEach((dot, dotIndex) => {
+          dot.setAttribute('aria-current', String(dotIndex === this.index));
+        });
+
+        if (this.currentCounter) {
+          this.currentCounter.textContent = String(this.index + 1).padStart(2, '0');
+        }
+
+        const activeSlide = this.realSlides[this.index];
+        if (activeSlide) {
+          this.root.style.setProperty('--carousel-control-color', activeSlide.dataset.controlColor || '#ffffff');
+          this.root.style.setProperty('--carousel-control-surface', activeSlide.dataset.controlSurface || 'rgba(20, 57, 43, 0.58)');
+          this.root.style.setProperty('--carousel-control-muted', activeSlide.dataset.controlMuted || 'rgba(255, 255, 255, 0.52)');
+
+          if (announce && this.status) {
+            const label = activeSlide.dataset.slideLabel || `Slide ${this.index + 1}`;
+            this.status.textContent = `Slide ${this.index + 1} of ${this.realSlides.length}: ${label}`;
+          }
+        }
+      }
+
+      normalizeLoopPosition() {
+        const count = this.realSlides.length;
+        if (count < 2) return;
+
+        let normalized = false;
+        if (this.physicalIndex === 0) {
+          this.physicalIndex = count;
+          normalized = true;
+        } else if (this.physicalIndex === count + 1) {
+          this.physicalIndex = 1;
+          normalized = true;
+        }
+
+        if (!normalized) return;
+
+        this.track.style.transition = 'none';
+        this.renderTransform();
+        void this.track.offsetWidth;
+        this.track.style.transition = '';
+      }
+
+      startAutoplay() {
+        if (!this.autoplayEnabled || this.realSlides.length < 2 || this.pauseReasons.size > 0 || this.destroyed) return;
+        this.clearAutoplay();
+        this.timer = window.setTimeout(() => {
+          this.step(1, { announce: false });
+        }, this.autoplayDelay);
+      }
+
+      restartAutoplay() {
+        this.clearAutoplay();
+        this.startAutoplay();
+      }
+
+      clearAutoplay() {
+        if (this.timer) window.clearTimeout(this.timer);
+        this.timer = null;
+      }
+
+      pause(reason) {
+        this.pauseReasons.add(reason);
+        this.clearAutoplay();
+      }
+
+      resume(reason) {
+        this.pauseReasons.delete(reason);
+        this.startAutoplay();
+      }
+
+      destroy() {
+        if (this.destroyed) return;
+        this.destroyed = true;
+        this.clearAutoplay();
+        cancelAnimationFrame(this.focusFrame);
+        cancelAnimationFrame(this.resizeFrame);
+        window.clearTimeout(this.clickResetTimer);
+        this.resizeObserver?.disconnect();
+        this.listeners.forEach(({ target, type, handler, options }) => {
+          target.removeEventListener(type, handler, options);
+        });
+        this.listeners = [];
+        this.root.dataset.initialized = 'false';
+        this.root.dataset.ready = 'false';
+      }
+    }
+
+    new CleanomicCarousel(root);
+  })();
+</script>

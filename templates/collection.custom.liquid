@@ -40,7 +40,7 @@
                         <span>{% if product.id == 7881714565358 %}{{ bathroomkit_price }} from <span
                                 style="text-decoration: line-through;">{{ bathroomkit_comprice }}</span>{% else
                             %}
-                             {% assign first_variant = product.variants.first %}
+                            {% assign first_variant = product.variants.first %}
 
                                 {% if first_variant.compare_at_price > first_variant.price %}
                                 {{ first_variant.price | money }}

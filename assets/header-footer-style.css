@@ -49,12 +49,161 @@
     font-weight: 700;
 }
 
+/* ============ General =============*/
+.mobile-nav__sublist .mobile-nav__link, .mobile-nav__sublist .mobile-nav__faux-link,
+.mobile-nav__item a, .mobile-nav__item .mobile-nav__faux-link, .mobile-nav__toggle button{
+    font-family: 'Lexend';
+    font-size: 16px;
+    color:#405244!important
+}
 /* Hide bundle link on desktop */
 .site-nav__item:nth-child(3) {
     display: none !important;
 }
 
-/* ============ General =============*/
+.mobile-nav__link[href="/pages/subscription-flow"] {
+    position: relative;
+    display:flex;
+    align-items:center;
+}
+.mobile-nav__link[href="/pages/subscription-flow"]::before {
+    display:block;
+    content: "";
+    width: 56PX;
+    height: 56PX;
+    background-image: url(/cdn/shop/files/thmb-create-bundle.jpg?v=1784123138);
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 100%;
+    border: 2px solid #ede9e0;
+    margin-right: 10px;
+}
+
+.mobile-nav__link[href="/pages/eco-bags-bundle"] {
+    position: relative;
+    display:flex;
+    align-items:center;
+}
+.mobile-nav__link[href="/pages/eco-bags-bundle"]::before {
+    display:block;
+    content: "";
+    width: 56PX;
+    height: 56PX;
+    background-image: url(/cdn/shop/files/thmb-zipbags.jpg?v=1784121295);
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 100%;
+    border: 2px solid #ede9e0;
+    margin-right: 10px;
+}
+
+.mobile-nav__link[href="/pages/laundry-starter-kit"] {
+    position: relative;
+    display:flex;
+    align-items:center;
+}
+.mobile-nav__link[href="/pages/laundry-starter-kit"]::before {
+    display:block;
+    content: "";
+    width: 56PX;
+    height: 56PX;
+    background-image: url(/cdn/shop/files/thmb-laundry-bundle.jpg?v=1784121295);
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 100%;
+    border: 2px solid #ede9e0;
+    margin-right: 10px;
+}
+
+.mobile-nav__link[href="/collections/laundry"] {
+    position: relative;
+    display:flex;
+    align-items:center;
+}
+.mobile-nav__link[href="/collections/laundry"]::before {
+    display:block;
+    content: "";
+    width: 56PX;
+    height: 56PX;
+    background-image: url(/cdn/shop/files/thmb-laundry.jpg?v=1784081728);
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 100%;
+    border: 2px solid #ede9e0;
+    margin-right: 10px;
+}
+
+.mobile-nav__link[href="/collections/laundry"] {
+    position: relative;
+    display:flex;
+    align-items:center;
+}
+.mobile-nav__link[href="/collections/laundry"]::before {
+    display:block;
+    content: "";
+    width: 56PX;
+    height: 56PX;
+    background-image: url(/cdn/shop/files/thmb-laundry.jpg?v=1784081728);
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 100%;
+    border: 2px solid #ede9e0;
+    margin-right: 10px;
+}
+
+.mobile-nav__link[href="/collections/cleaning"] {
+    position: relative;
+    display:flex;
+    align-items:center;
+}
+.mobile-nav__link[href="/collections/cleaning"]::before {
+    display:block;
+    content: "";
+    width: 56PX;
+    height: 56PX;
+    background-image: url(/cdn/shop/files/thmb-cleaning.jpg?v=1784081723);
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 100%;
+    border: 2px solid #ede9e0;
+    margin-right: 10px;
+}
+
+.mobile-nav__link[href="/collections/kitchen"] {
+    position: relative;
+    display:flex;
+    align-items:center;
+}
+.mobile-nav__link[href="/collections/kitchen"]::before {
+    display:block;
+    content: "";
+    width: 56PX;
+    height: 56PX;
+    background-image: url(/cdn/shop/files/thmb-kitchen.jpg?v=1784082004);
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 100%;
+    border: 2px solid #ede9e0;
+    margin-right: 10px;
+}
+
+.mobile-nav__link[href="/collections/bathroom"] {
+    position: relative;
+    display:flex;
+    align-items:center;
+}
+.mobile-nav__link[href="/collections/bathroom"]::before {
+    display:block;
+    content: "";
+    width: 56PX;
+    height: 56PX;
+    background-image: url(/cdn/shop/files/thmb-bathroom.jpg?v=1784081720);
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 100%;
+    border: 2px solid #ede9e0;
+    margin-right: 10px;
+}
 
 .rc_widget__option__plans p {
     white-space: normal;
@@ -120,9 +269,20 @@
 
 /* ============ Footer =============*/
 .custom-footer {
+    position: relative;
     padding-top: 105px;
     padding-bottom: 60px;
     background-color: #185741;
+}
+
+.custom-footer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 8px;
+  background: linear-gradient(90deg, #9B7734, #EDDD8B);
 }
 
 .custom-footer .container {

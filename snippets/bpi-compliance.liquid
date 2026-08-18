@@ -1,0 +1,96 @@
+<script>
+(function () {
+  const replacements = {
+    Trash: 'Waste',
+    trash: 'waste'
+  };
+
+  const pattern = /\b(Trash|trash)\b/g;
+  const ignoredTags = new Set([
+    'SCRIPT',
+    'STYLE',
+    'NOSCRIPT',
+    'TEXTAREA',
+    'CODE',
+    'PRE'
+  ]);
+
+  function replaceText(textNode) {
+    const parent = textNode.parentElement;
+
+    if (!parent || ignoredTags.has(parent.tagName)) {
+      return;
+    }
+
+    const originalText = textNode.nodeValue;
+    const updatedText = originalText.replace(
+      pattern,
+      match => replacements[match]
+    );
+
+    if (updatedText !== originalText) {
+      textNode.nodeValue = updatedText;
+    }
+  }
+
+  function scanElement(element) {
+    if (!element) return;
+
+    if (element.nodeType === Node.TEXT_NODE) {
+      replaceText(element);
+      return;
+    }
+
+    if (element.nodeType !== Node.ELEMENT_NODE) {
+      return;
+    }
+
+    if (ignoredTags.has(element.tagName)) {
+      return;
+    }
+
+    const walker = document.createTreeWalker(
+      element,
+      NodeFilter.SHOW_TEXT
+    );
+
+    let textNode;
+
+    while ((textNode = walker.nextNode())) {
+      replaceText(textNode);
+    }
+  }
+
+  function initializeReplacement() {
+    scanElement(document.body);
+
+    // Handles content dynamically inserted by REVIEWS.io or other apps.
+    const observer = new MutationObserver(mutations => {
+      mutations.forEach(mutation => {
+        if (mutation.type === 'characterData') {
+          replaceText(mutation.target);
+        }
+
+        mutation.addedNodes.forEach(node => {
+          scanElement(node);
+        });
+      });
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+      characterData: true
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener(
+      'DOMContentLoaded',
+      initializeReplacement
+    );
+  } else {
+    initializeReplacement();
+  }
+})();
+</script>

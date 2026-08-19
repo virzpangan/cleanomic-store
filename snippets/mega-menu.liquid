@@ -423,21 +423,21 @@ header.site-header {
   const megaParent = document.querySelector(".has-mega");
   const megaToggle = megaParent.querySelector(".nav-link");
 
-  menuButton.addEventListener("click", () => {
+  {% comment %} menuButton.addEventListener("click", () => {
     mainNav.classList.toggle("is-open");
     navActions.classList.toggle("is-open");
-  });
+  }); {% endcomment %}
 
-  megaToggle.addEventListener("click", (event) => {
+  {% comment %} megaToggle.addEventListener("click", (event) => {
     if (window.innerWidth <= 900) {
       event.preventDefault();
       megaParent.classList.toggle("is-open");
     }
-  });
+  }); {% endcomment %}
 </script>
 
 <script>
-    $(document).on('ready', function () {
+    whenSlickReady(function ($) {
         $('.mega-bundle-slider').slick({
             slidesToShow: 2,
             slidesToScroll: 1,

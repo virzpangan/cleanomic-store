@@ -1,3 +1,27 @@
+{%- comment -%} FAQPage JSON-LD built from the section's question blocks (answers stay visible on the page). {%- endcomment -%}
+{%- assign faq_json = "" -%}
+{%- assign faq_count = 0 -%}
+{%- for block in section.blocks -%}
+  {%- if block.type == 'question' and block.settings.title != blank and block.settings.text != blank -%}
+    {%- assign faq_count = faq_count | plus: 1 -%}
+    {%- capture faq_item -%}{"@type": "Question", "name": {{ block.settings.title | strip_html | json }}, "acceptedAnswer": {"@type": "Answer", "text": {{ block.settings.text | json }}}}{%- endcapture -%}
+    {%- if faq_json == "" -%}
+      {%- assign faq_json = faq_item -%}
+    {%- else -%}
+      {%- assign faq_json = faq_json | append: "," | append: faq_item -%}
+    {%- endif -%}
+  {%- endif -%}
+{%- endfor -%}
+{%- if faq_count > 0 -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [{{ faq_json }}]
+}
+</script>
+{%- endif -%}
+
 {%- if section.settings.page_title_enable or section.settings.page_content_enable -%}
   <div class="page-width page-content{% if section.blocks.size > 0 %} page-content--with-blocks{% endif %}">
 

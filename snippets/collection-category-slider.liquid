@@ -52,7 +52,7 @@
 {% endfor %}
 
 <script>
-    $(document).on('ready', function () {
+    whenSlickReady(function ($) {
         $('.sc-recommended .slider-wrapper').slick({
             slidesToShow: 2,
             slidesToScroll: 1,

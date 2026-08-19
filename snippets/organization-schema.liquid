@@ -1,0 +1,41 @@
+{%- comment -%}
+  Organization JSON-LD, managed via Theme settings > Organization schema.
+  Rendered site-wide from theme.liquid. Social profile URLs (sameAs) are
+  reused from the existing Social media settings.
+{%- endcomment -%}
+{%- if settings.organization_schema_enable -%}
+  {%- assign org_name = settings.organization_name | default: shop.name -%}
+
+  {%- capture social_raw -%}{{ settings.social_facebook_link }}|||{{ settings.social_twitter_link }}|||{{ settings.social_instagram_link }}|||{{ settings.social_pinterest_link }}|||{{ settings.social_youtube_link }}|||{{ settings.social_linkedin_link }}|||{{ settings.social_tumblr_link }}|||{{ settings.social_snapchat_link }}|||{{ settings.social_vimeo_link }}{%- endcapture -%}
+  {%- assign social_arr = social_raw | split: "|||" -%}
+  {%- assign same_as_json = "" -%}
+  {%- for link in social_arr -%}
+    {%- assign link = link | strip -%}
+    {%- if link != blank -%}
+      {%- capture one -%}{{ link | json }}{%- endcapture -%}
+      {%- if same_as_json == "" -%}
+        {%- assign same_as_json = one -%}
+      {%- else -%}
+        {%- assign same_as_json = same_as_json | append: "," | append: one -%}
+      {%- endif -%}
+    {%- endif -%}
+  {%- endfor -%}
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": {{ org_name | json }},
+  "url": "{{ shop.url }}"{% if settings.organization_legal_name != blank %},
+  "legalName": {{ settings.organization_legal_name | json }}{% endif %}{% if settings.organization_logo != blank %},
+  "logo": "{{ settings.organization_logo | img_url: '512x512' | prepend: 'https:' }}"{% endif %}{% if same_as_json != "" %},
+  "sameAs": [{{ same_as_json }}]{% endif %}{% if settings.organization_phone != blank or settings.organization_email != blank %},
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": {{ settings.organization_contact_type | default: 'customer service' | json }}{% if settings.organization_phone != blank %},
+    "telephone": {{ settings.organization_phone | json }}{% endif %}{% if settings.organization_email != blank %},
+    "email": {{ settings.organization_email | json }}{% endif %}
+  }{% endif %}
+}
+</script>
+{%- endif -%}

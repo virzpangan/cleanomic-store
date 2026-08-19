@@ -1,7 +1,9 @@
 {% include 'shogun-content-handler' %}
 <!doctype html>
 <html class="no-js" lang="{{ shop.locale }}">
-<head><!-- hnk portfolio proof -->
+<head>
+  <link rel="canonical" href="{{ canonical_url }}">
+<!-- hnk portfolio proof -->
 <!-- Google Tag Manager -->
 <script>(function (w, d, s, l, i) {
         w[l] = w[l] || []; w[l].push({
@@ -91,7 +93,35 @@
 
   {{ content_for_header }}
 
+  {% include 'organization-schema' %}
+
+  {%- if request.page_type == 'product' -%}
+    {% include 'product-schema' %}
+  {%- endif -%}
+
+  {% unless template == 'page.zipbagbundle' %}
+    <script src="https://code.jquery.com/jquery-2.2.0.min.js" defer="defer"></script>
+  {% endunless %}
+
   <script src="{{ 'vendor-scripts-v4.js' | asset_url | split: '?' | first }}" defer="defer"></script>
+
+  {%- comment -%}
+    Inline slider scripts run during HTML parse, before deferred jQuery/Slick.
+    Queue inits until both are available, then run on jQuery ready.
+  {%- endcomment -%}
+  <script>
+    window.whenSlickReady = function (fn) {
+      var tries = 0;
+      (function check() {
+        if (window.jQuery && jQuery.fn && typeof jQuery.fn.slick === 'function') {
+          jQuery(fn);
+          return;
+        }
+        if (++tries > 100) return;
+        setTimeout(check, 30);
+      })();
+    };
+  </script>
 
   {% if settings.enable_currencies %}
     <script src="/services/javascripts/currencies.js" defer="defer"></script>
@@ -99,12 +129,11 @@
   {% endif %}
 
    {% unless template == 'page.zipbagbundle' %}
-  <script src="https://unpkg.com/scrollreveal"></script>
+  <script src="https://unpkg.com/scrollreveal@4.0.9/dist/scrollreveal.min.js" defer="defer"></script>
   <script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>
   <script src="{{ 'custom.js' | asset_url }}" defer="defer"></script>
   <script src="{{ 'customer-vip.js' | asset_url }}" defer="defer"></script>
    <script src="{{ 'bundle.js' | asset_url }}" defer="defer"></script>
-  <script src="https://code.jquery.com/jquery-2.2.0.min.js" type="text/javascript"></script>
   {%- if template contains 'customers' -%}
     <script src="{{ 'shopify_common.js' | shopify_asset_url }}" defer="defer"></script>
   {%- endif -%}
@@ -123,7 +152,7 @@
 </script>
 
     {% render 'shogun-head' %}
-{%render 'fbTrack' %}<!-- DO NOT REMOVE Effective Apps TiXel Code Start--><link id="eaManualTPI" /><script> !function (w, d, t) { w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var i="https://analytics.tiktok.com/i18n/pixel/events.js";ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=i,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};var o=document.createElement("script");o.type="text/javascript",o.async=!0,o.src=i+"?sdkid="+e+"&lib="+t;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(o,a)}; ttq.load("CBUQPRBC77UFL42EP2G0"); ttq.page(); }(window, document, "ttq"); </script><!-- DO NOT REMOVE Effective Apps TiXel Code End-->
+{%render 'fbTrack' %}<!-- DO NOT REMOVE Effective Apps TiXel Code Start--><script> !function (w, d, t) { w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var i="https://analytics.tiktok.com/i18n/pixel/events.js";ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=i,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};var o=document.createElement("script");o.type="text/javascript",o.async=!0,o.src=i+"?sdkid="+e+"&lib="+t;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(o,a)}; ttq.load("CBUQPRBC77UFL42EP2G0"); ttq.page(); }(window, document, "ttq"); </script><!-- DO NOT REMOVE Effective Apps TiXel Code End-->
 
 <!-- Audience Lab Pixel -->
 <script src="https://cdn.idpixel.app/v1/idp-analytics-6a4d6f525c012440693ab26e.min.js" defer></script>

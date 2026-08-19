@@ -1044,5 +1044,58 @@
         ]
       }
     ]
+  },
+  {
+    "name": "Organization schema",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Adds Organization structured data (JSON-LD) so search engines can associate your brand, logo, and social profiles. Social profile links are reused from the Social media settings."
+      },
+      {
+        "type": "checkbox",
+        "id": "organization_schema_enable",
+        "label": "Enable Organization schema",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "organization_name",
+        "label": "Organization name",
+        "info": "Leave blank to use your store name"
+      },
+      {
+        "type": "text",
+        "id": "organization_legal_name",
+        "label": "Legal name",
+        "info": "Registered legal name, if different from the display name"
+      },
+      {
+        "type": "image_picker",
+        "id": "organization_logo",
+        "label": "Logo",
+        "info": "Square logo recommended, at least 112 x 112px"
+      },
+      {
+        "type": "header",
+        "content": "Contact point"
+      },
+      {
+        "type": "text",
+        "id": "organization_phone",
+        "label": "Telephone"
+      },
+      {
+        "type": "text",
+        "id": "organization_email",
+        "label": "Email"
+      },
+      {
+        "type": "text",
+        "id": "organization_contact_type",
+        "label": "Contact type",
+        "default": "customer service"
+      }
+    ]
   }
 ]

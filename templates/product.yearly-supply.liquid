@@ -1,47 +1,31 @@
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script>
     window.addEventListener("DOMContentLoaded", () => {
-        jQuery.ajax({
-            type: "POST",
-            url: '/cart/clear.js',
-            data: '',
-            dataType: 'json',
-            success: function () {
-                //alert('cart is empty..');
-                const url_string = window.location.href
-                let url = new URL(url_string);
-                const variant_id = url.searchParams.get("variant_id");
-        		const selling_plan = 3274244334;
+        const sellingPlan = 3274244334;
+        const variantId = new URL(window.location.href).searchParams.get("variant_id");
+        const utmParam = window.location.search.substring(1);
 
-                data = {
-                    "items": [
+        fetch('/cart/clear.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+        })
+            .then(() => fetch('/cart/add.js', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    items: [
                         {
-                            "id": variant_id,
-                            "quantity": 1,
-                            "selling_plan": selling_plan
+                            id: variantId,
+                            quantity: 1,
+                            selling_plan: sellingPlan
                         }
                     ]
-                }
-
-                jQuery.ajax({
-                    type: 'POST',
-                    url: '/cart/add.js',
-                    data: data,
-                    dataType: 'json',
-
-                    success: function () {
-                        //Get UTM parameters
-      						const utmParam = window.location.search.substring(1);
-                            window.location.href = '/checkout/?'+utmParam;
-
-                    }
-                });
-            },
-            error: function (XMLHttpRequest, textStatus) {
+                })
+            }))
+            .then(() => {
+                window.location.href = '/checkout/?' + utmParam;
+            })
+            .catch(() => {
                 /* error code */
-            }
-        });
-
+            });
     });
-
 </script>

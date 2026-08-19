@@ -72,6 +72,56 @@
 
     {% endif %}
   </nav>
+
+  {%- comment -%} BreadcrumbList JSON-LD mirroring the visual trail above. {%- endcomment -%}
+  {%- assign bc_pos = 1 -%}
+  {%- capture bc_items -%}{"@type": "ListItem", "position": 1, "name": {{ 'general.breadcrumbs.home' | t | json }}, "item": "{{ shop.url }}/"}{%- endcapture -%}
+  {%- if template.name == 'product' -%}
+    {%- if collection and collection.handle -%}
+      {%- assign bc_pos = bc_pos | plus: 1 -%}
+      {%- capture bc_items -%}{{ bc_items }},{"@type": "ListItem", "position": {{ bc_pos }}, "name": {{ collection.title | json }}, "item": "{{ shop.url }}/collections/{{ collection.handle }}"}{%- endcapture -%}
+    {%- endif -%}
+    {%- assign bc_pos = bc_pos | plus: 1 -%}
+    {%- capture bc_items -%}{{ bc_items }},{"@type": "ListItem", "position": {{ bc_pos }}, "name": {{ product.title | json }}, "item": "{{ shop.url }}{{ product.url }}"}{%- endcapture -%}
+  {%- elsif template.name == 'collection' and collection.handle -%}
+    {%- if current_tags -%}
+      {%- assign bc_pos = bc_pos | plus: 1 -%}
+      {%- capture bc_items -%}{{ bc_items }},{"@type": "ListItem", "position": {{ bc_pos }}, "name": {{ collection.title | json }}, "item": "{{ shop.url }}/collections/{{ collection.handle }}"}{%- endcapture -%}
+      {%- assign bc_pos = bc_pos | plus: 1 -%}
+      {%- capture bc_items -%}{{ bc_items }},{"@type": "ListItem", "position": {{ bc_pos }}, "name": {{ current_tags | join: " + " | json }}}{%- endcapture -%}
+    {%- else -%}
+      {%- assign bc_pos = bc_pos | plus: 1 -%}
+      {%- capture bc_items -%}{{ bc_items }},{"@type": "ListItem", "position": {{ bc_pos }}, "name": {{ collection.title | json }}, "item": "{{ shop.url }}{{ collection.url }}"}{%- endcapture -%}
+    {%- endif -%}
+  {%- elsif template.name == 'blog' -%}
+    {%- if current_tags -%}
+      {%- assign bc_pos = bc_pos | plus: 1 -%}
+      {%- capture bc_items -%}{{ bc_items }},{"@type": "ListItem", "position": {{ bc_pos }}, "name": {{ blog.title | json }}, "item": "{{ shop.url }}{{ blog.url }}"}{%- endcapture -%}
+      {%- assign bc_pos = bc_pos | plus: 1 -%}
+      {%- capture bc_items -%}{{ bc_items }},{"@type": "ListItem", "position": {{ bc_pos }}, "name": {{ current_tags | join: " + " | json }}}{%- endcapture -%}
+    {%- else -%}
+      {%- assign bc_pos = bc_pos | plus: 1 -%}
+      {%- capture bc_items -%}{{ bc_items }},{"@type": "ListItem", "position": {{ bc_pos }}, "name": {{ blog.title | json }}, "item": "{{ shop.url }}{{ blog.url }}"}{%- endcapture -%}
+    {%- endif -%}
+  {%- elsif template.name == 'article' -%}
+    {%- assign bc_pos = bc_pos | plus: 1 -%}
+    {%- capture bc_items -%}{{ bc_items }},{"@type": "ListItem", "position": {{ bc_pos }}, "name": {{ blog.title | json }}, "item": "{{ shop.url }}{{ blog.url }}"}{%- endcapture -%}
+    {%- assign bc_pos = bc_pos | plus: 1 -%}
+    {%- capture bc_items -%}{{ bc_items }},{"@type": "ListItem", "position": {{ bc_pos }}, "name": {{ article.title | json }}, "item": "{{ shop.url }}{{ article.url }}"}{%- endcapture -%}
+  {%- elsif template.name == 'page' -%}
+    {%- assign bc_pos = bc_pos | plus: 1 -%}
+    {%- capture bc_items -%}{{ bc_items }},{"@type": "ListItem", "position": {{ bc_pos }}, "name": {{ page.title | json }}, "item": "{{ shop.url }}{{ page.url }}"}{%- endcapture -%}
+  {%- else -%}
+    {%- assign bc_pos = bc_pos | plus: 1 -%}
+    {%- capture bc_items -%}{{ bc_items }},{"@type": "ListItem", "position": {{ bc_pos }}, "name": {{ page_title | json }}}{%- endcapture -%}
+  {%- endif -%}
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{{ bc_items }}]
+}
+</script>
   {% endunless %}
 
 {% endif %}

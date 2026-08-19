@@ -1,5 +1,23 @@
 {% assign list = collection.metafields.custom.collection_list.value %}
 {% assign breadcrums = linklists.collection-main %}
+
+{%- comment -%} Build CollectionPage + ItemList schema from the referenced sub-collections. {%- endcomment -%}
+{%- assign schema_position = 0 -%}
+{%- assign schema_items_json = "" -%}
+{%- for item in list -%}
+  {%- for sub_collection in collections -%}
+    {%- if sub_collection.title == item -%}
+      {%- assign schema_position = schema_position | plus: 1 -%}
+      {%- capture schema_list_item -%}{"@type": "ListItem", "position": {{ schema_position }}, "url": "{{ shop.url }}{{ sub_collection.url }}", "name": {{ sub_collection.title | json }}}{%- endcapture -%}
+      {%- if schema_items_json == "" -%}
+        {%- assign schema_items_json = schema_list_item -%}
+      {%- else -%}
+        {%- assign schema_items_json = schema_items_json | append: "," | append: schema_list_item -%}
+      {%- endif -%}
+    {%- endif -%}
+  {%- endfor -%}
+{%- endfor -%}
+{% include 'collection-schema', item_list_json: schema_items_json, item_count: schema_position %}
 <div class="coll-main-banner">
     <div class="container">
         <div class="row">

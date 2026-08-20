@@ -1,0 +1,70 @@
+<div class="custom-collection">
+  <div class="banner">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="wrapper">
+            <h2>{{ collection.title }}</h2>
+            <p>{{ collection.description }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr />
+  <div class="product-list">
+    <div class="container">
+      <div class="row">
+        {% for product in collection.products %}
+          {% if product.id == 7881714565358 %}
+            {% for variant in product.variants %}
+              {% if variant.id == 43432473231598 %}
+                {% assign bathroomkit_comprice = variant.compare_at_price | money %}
+                {% assign bathroomkit_price = variant.price | money %}
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+          <div class="col-md-6 col-lg-6 col-xl-4">
+            <div class="wrapper">
+              <figure>
+                <a href="{{ product.url }}">
+                  <img
+                    src="{{ product.featured_image | img_url: '400x' }}"
+                    alt="{{ product.featured_image.alt }}"
+                  >
+                </a>
+                <a class="btn-shop" href="{{ product.url }}">
+                  {%- if product.available %}Shop Now{% else %}Sold Out - Coming Soon{% endif -%}
+                </a>
+              </figure>
+              <div style="display:none;" class="yotpo bottomLine" data-yotpo-product-id="{{ product.id }}"></div>
+              <h5>{{ product.title }}</h5>
+              <span>
+                {%- if product.id == 7881714565358 -%}
+                  {{- bathroomkit_price }} from
+                  <span
+                    style="text-decoration: line-through;"
+                  >
+                    {{- bathroomkit_comprice -}}
+                  </span>
+                {%- else %}
+                  {% assign first_variant = product.variants.first %}
+
+                  {% if first_variant.compare_at_price > first_variant.price %}
+                    {{ first_variant.price | money }}
+                    from
+                    <span style="text-decoration: line-through;">
+                      {{ first_variant.compare_at_price | money }}
+                    </span>
+                  {% else %}
+                    {{ first_variant.price | money }}
+                  {% endif %}
+                {% endif -%}
+              </span>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>

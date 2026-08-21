@@ -67,6 +67,7 @@
     align-items:center;
 }
 .mobile-nav__link[href="/pages/subscription-flow"]::before {
+    flex-shrink: 0;
     display:block;
     content: "";
     width: 56PX;
@@ -85,11 +86,32 @@
     align-items:center;
 }
 .mobile-nav__link[href="/pages/eco-bags-bundle"]::before {
+    flex-shrink: 0;
     display:block;
     content: "";
     width: 56PX;
     height: 56PX;
     background-image: url(/cdn/shop/files/thmb-zipbags.jpg?v=1784121295);
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 100%;
+    border: 2px solid #ede9e0;
+    margin-right: 10px;
+}
+
+
+.mobile-nav__link[href="/pages/build-a-bundle"] {
+    position: relative;
+    display:flex;
+    align-items:center;
+}
+.mobile-nav__link[href="/pages/build-a-bundle"]::before {
+    flex-shrink: 0;
+    display:block;
+    content: "";
+    width: 56PX;
+    height: 56PX;
+    background-image: url(/cdn/shop/files/thmb-build-bundle.jpg?v=1787297917);
     background-repeat: no-repeat;
     background-size: cover;
     border-radius: 100%;
@@ -103,6 +125,7 @@
     align-items:center;
 }
 .mobile-nav__link[href="/pages/laundry-starter-kit"]::before {
+    flex-shrink: 0;
     display:block;
     content: "";
     width: 56PX;

@@ -5,8 +5,8 @@
     --color-ivory: #f5f2eb;
     --color-dot: #c8d2cd;
     --color-white: #ffffff;
-    --font-display: "Marcellus", Georgia, serif;
-    --font-body: "Lexend", Arial, sans-serif;
+    --font-display: 'Marcellus', Georgia, serif;
+    --font-body: 'Lexend', Arial, sans-serif;
     --hero-height: calc(100vh - 100px);
     --content-width: 20rem;
     --content-left: 145px;
@@ -69,7 +69,7 @@
     height: auto;
   }
 
-  .hero-carousel .slick-slide>div:not([class]),
+  .hero-carousel .slick-slide > div:not([class]),
   .hero-slide {
     height: 100%;
   }
@@ -99,7 +99,6 @@
   .hero-slide__image--refills {
     object-position: 60% center;
   }
-
 
   /* Cinematic motion layer: keeps the existing design while giving each
    transition a softer crossfade, restrained image drift, and staggered copy. */
@@ -143,9 +142,7 @@
     opacity: 0.78;
     transform: translate3d(-0.75%, 0, 0) scaleX(0.99);
     transform-origin: left center;
-    transition:
-      opacity var(--motion-wash-duration) ease,
-      transform var(--motion-wash-duration) var(--motion-ease);
+    transition: opacity var(--motion-wash-duration) ease, transform var(--motion-wash-duration) var(--motion-ease);
     will-change: opacity, transform;
   }
 
@@ -154,57 +151,47 @@
     transform: translate3d(0, 0, 0) scaleX(1);
   }
 
-  .hero-carousel.motion-primed .hero-slide__content>* {
+  .hero-carousel.motion-primed .hero-slide__content > * {
     opacity: 0;
     filter: blur(2px);
     clip-path: inset(0 0 16% 0);
     transform: translate3d(0, 1.35rem, 0);
-    transition:
-      opacity 620ms ease,
-      filter 620ms ease,
-      clip-path var(--motion-copy-duration) var(--motion-ease),
+    transition: opacity 620ms ease, filter 620ms ease, clip-path var(--motion-copy-duration) var(--motion-ease),
       transform var(--motion-copy-duration) var(--motion-ease);
     transition-delay: 0ms;
     will-change: opacity, filter, clip-path, transform;
   }
 
-  .hero-carousel.motion-primed.is-ready .slick-current .hero-slide__content>* {
+  .hero-carousel.motion-primed.is-ready .slick-current .hero-slide__content > * {
     opacity: 1;
     filter: blur(0);
     clip-path: inset(0 0 0 0);
     transform: translate3d(0, 0, 0);
   }
 
-
   .hero-carousel.motion-primed .hero-slide__button {
-    transition:
-      opacity 620ms ease,
-      filter 620ms ease,
-      clip-path var(--motion-copy-duration) var(--motion-ease),
-      transform var(--motion-copy-duration) var(--motion-ease),
-      color var(--transition),
-      background-color var(--transition),
-      box-shadow var(--transition);
+    transition: opacity 620ms ease, filter 620ms ease, clip-path var(--motion-copy-duration) var(--motion-ease),
+      transform var(--motion-copy-duration) var(--motion-ease), color var(--transition),
+      background-color var(--transition), box-shadow var(--transition);
   }
 
-  .hero-carousel.motion-primed.is-ready .slick-current .hero-slide__content> :nth-child(1) {
+  .hero-carousel.motion-primed.is-ready .slick-current .hero-slide__content > :nth-child(1) {
     transition-delay: 160ms;
   }
 
-  .hero-carousel.motion-primed.is-ready .slick-current .hero-slide__content> :nth-child(2) {
+  .hero-carousel.motion-primed.is-ready .slick-current .hero-slide__content > :nth-child(2) {
     transition-delay: 255ms;
   }
 
-  .hero-carousel.motion-primed.is-ready .slick-current .hero-slide__content> :nth-child(3) {
+  .hero-carousel.motion-primed.is-ready .slick-current .hero-slide__content > :nth-child(3) {
     transition-delay: 350ms;
   }
 
-
-  .hero-carousel.motion-primed.is-ready .slick-current .hero-slide__content> :nth-child(3).hero-slide__button {
+  .hero-carousel.motion-primed.is-ready .slick-current .hero-slide__content > :nth-child(3).hero-slide__button {
     transition-delay: 350ms, 350ms, 350ms, 350ms, 0ms, 0ms, 0ms;
   }
 
-  .hero-carousel.motion-primed.is-transitioning .slick-slide:not(.slick-current) .hero-slide__content>* {
+  .hero-carousel.motion-primed.is-transitioning .slick-slide:not(.slick-current) .hero-slide__content > * {
     transition-delay: 0ms;
   }
 
@@ -218,12 +205,13 @@
     z-index: -2;
     pointer-events: none;
 
-    background:
-      linear-gradient(90deg,
-        rgba(237, 233, 224, 0.96) 0%,
-        rgba(237, 233, 224, 0.87) 26%,
-        rgba(237, 233, 224, 0.42) 44%,
-        rgba(237, 233, 224, 0) 75%)
+    background: linear-gradient(
+      90deg,
+      rgba(237, 233, 224, 0.96) 0%,
+      rgba(237, 233, 224, 0.87) 26%,
+      rgba(237, 233, 224, 0.42) 44%,
+      rgba(237, 233, 224, 0) 75%
+    );
   }
 
   .hero-slide__content {
@@ -452,11 +440,13 @@
     }
 
     .hero-slide__wash {
-      background: linear-gradient(90deg,
-          rgba(250, 248, 241, 0.96) 0%,
-          rgba(250, 248, 241, 0.82) 24%,
-          rgba(250, 248, 241, 0.24) 52%,
-          rgba(250, 248, 241, 0) 70%);
+      background: linear-gradient(
+        90deg,
+        rgba(250, 248, 241, 0.96) 0%,
+        rgba(250, 248, 241, 0.82) 24%,
+        rgba(250, 248, 241, 0.24) 52%,
+        rgba(250, 248, 241, 0) 70%
+      );
     }
 
     .hero-slide__image--bags,
@@ -486,12 +476,13 @@
     }
 
     .hero-slide__wash {
-      background:
-        linear-gradient(0deg,
-          rgba(250, 248, 241, 0.98) 0%,
-          rgba(250, 248, 241, 0.89) 30%,
-          rgba(250, 248, 241, 0.22) 62%,
-          rgba(250, 248, 241, 0) 78%);
+      background: linear-gradient(
+        0deg,
+        rgba(250, 248, 241, 0.98) 0%,
+        rgba(250, 248, 241, 0.89) 30%,
+        rgba(250, 248, 241, 0.22) 62%,
+        rgba(250, 248, 241, 0) 78%
+      );
     }
 
     .hero-slide__content {
@@ -528,7 +519,6 @@
   }
 
   @media (hover: none) {
-
     .hero-carousel .slick-prev,
     .hero-carousel .slick-next {
       display: inline-block;
@@ -536,7 +526,6 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-
     .hero *,
     .hero *::before,
     .hero *::after {
@@ -550,8 +539,8 @@
     .hero-carousel.motion-primed.is-ready .slick-current .hero-slide__image,
     .hero-carousel.motion-primed .hero-slide__wash,
     .hero-carousel.motion-primed.is-ready .slick-current .hero-slide__wash,
-    .hero-carousel.motion-primed .hero-slide__content>*,
-    .hero-carousel.motion-primed.is-ready .slick-current .hero-slide__content>* {
+    .hero-carousel.motion-primed .hero-slide__content > *,
+    .hero-carousel.motion-primed.is-ready .slick-current .hero-slide__content > * {
       opacity: 1 !important;
       filter: none !important;
       clip-path: none !important;
@@ -563,46 +552,83 @@
   <div class="hero-carousel" role="region" aria-roledescription="carousel" aria-label="Featured promotions">
     <article class="hero-slide" aria-label="Slide 1 of 3">
       <!-- Replace this URL with the final 1600×580-or-larger campaign image. -->
-      <img class="hero-slide__image hero-slide__image--bags bnr-xl"
-        src="https://cdn.shopify.com/s/files/1/0278/0240/2903/files/cln-slide1-bg.webp?v=1785994398" alt="" width="1600"
-        height="768" fetchpriority="high">
-      <img class="hero-slide__image hero-slide__image--bags bnr-xs"
-        src="https://cdn.shopify.com/s/files/1/0278/0240/2903/files/cln-xs-slide1-opt.webp?v=1786278884" alt=""
-        width="579" height="1030" fetchpriority="high">
+      <img
+        class="hero-slide__image hero-slide__image--bags bnr-xl"
+        src="https://cdn.shopify.com/s/files/1/0278/0240/2903/files/cln-slide1-bg.webp?v=1785994398"
+        alt=""
+        width="1600"
+        height="768"
+        fetchpriority="high"
+      >
+      <img
+        class="hero-slide__image hero-slide__image--bags bnr-xs"
+        src="https://cdn.shopify.com/s/files/1/0278/0240/2903/files/cln-xs-slide1-opt.webp?v=1786278884"
+        alt=""
+        width="579"
+        height="1030"
+        fetchpriority="high"
+      >
       <div class="hero-slide__wash" aria-hidden="true"></div>
       <div class="hero-slide__content">
         <h2>Kinder habits start at home</h2>
-        <p>Thoughtfully designed everyday essentials that help care for the planet & your home - without changing your
-          routine.</p>
+        <p>
+          Thoughtfully designed everyday essentials that help care for the planet & your home - without changing your
+          routine.
+        </p>
         <a class="hero-slide__button" href="/collections/all">Shop Everyday Essentials</a>
       </div>
     </article>
 
     <article class="hero-slide" aria-label="Slide 2 of 3">
       <!-- Replace this URL with the final 1600×580-or-larger campaign image. -->
-      <img class="hero-slide__image hero-slide__image--refills bnr-xl"
-        src="https://cdn.shopify.com/s/files/1/0278/0240/2903/files/cln-slide2-bg.webp?v=1785994399" alt="" width="1600"
-        height="768" loading="lazy">
-      <img class="hero-slide__image hero-slide__image--refills bnr-xs"
-        src="https://cdn.shopify.com/s/files/1/0278/0240/2903/files/cln-xs-slide2-opt.webp?v=1786278883" alt=""
-        width="579" height="1030" loading="lazy">
+      <img
+        class="hero-slide__image hero-slide__image--refills bnr-xl"
+        src="https://cdn.shopify.com/s/files/1/0278/0240/2903/files/cln-slide2-bg.webp?v=1785994399"
+        alt=""
+        width="1600"
+        height="768"
+        loading="lazy"
+      >
+      <img
+        class="hero-slide__image hero-slide__image--refills bnr-xs"
+        src="https://cdn.shopify.com/s/files/1/0278/0240/2903/files/cln-xs-slide2-opt.webp?v=1786278883"
+        alt=""
+        width="579"
+        height="1030"
+        loading="lazy"
+      >
       <div class="hero-slide__wash" aria-hidden="true"></div>
       <div class="hero-slide__content">
         <h2>Never run out of your go-to bags again</h2>
-        <p>Build your Eco Bags Bundle and enjoy Free Kitchen Waste Bags for Life. <sup
-            style="display:inline-block">*With Subscription</sup></p>
+        <p>
+          Build your Eco Bags Bundle and enjoy Free Kitchen Waste Bags for Life.
+          <sup
+            style="display:inline-block"
+            >*With Subscription</sup
+          >
+        </p>
         <a class="hero-slide__button" href="/pages/eco-bags-bundle">Shop Eco Bags Bundle</a>
       </div>
     </article>
 
     <article class="hero-slide" aria-label="Slide 3 of 3">
       <!-- Replace this URL with the final 1600×580-or-larger campaign image. -->
-      <img class="hero-slide__image hero-slide__image--refills bnr-xl"
-        src="https://cdn.shopify.com/s/files/1/0278/0240/2903/files/cln-slide3-bg.webp?v=1785994399" alt="" width="1600"
-        height="768" loading="lazy">
-      <img class="hero-slide__image hero-slide__image--refills bnr-xs"
-        src="https://cdn.shopify.com/s/files/1/0278/0240/2903/files/cln-xs-slide3-opt.webp?v=1786278884" alt=""
-        width="579" height="1030" loading="lazy">
+      <img
+        class="hero-slide__image hero-slide__image--refills bnr-xl"
+        src="https://cdn.shopify.com/s/files/1/0278/0240/2903/files/cln-slide3-bg.webp?v=1785994399"
+        alt=""
+        width="1600"
+        height="768"
+        loading="lazy"
+      >
+      <img
+        class="hero-slide__image hero-slide__image--refills bnr-xs"
+        src="https://cdn.shopify.com/s/files/1/0278/0240/2903/files/cln-xs-slide3-opt.webp?v=1786278884"
+        alt=""
+        width="579"
+        height="1030"
+        loading="lazy"
+      >
       <div class="hero-slide__wash" aria-hidden="true"></div>
       <div class="hero-slide__content">
         <h2>Make every day feel effortless</h2>
@@ -618,21 +644,21 @@
   </button>
   <p class="sr-only carousel-status" aria-live="polite" aria-atomic="true"></p>
 </section>
-
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script>
-  $(document).on('ready', function () {
+  $(document).ready(function () {
     (function ($) {
-      "use strict";
+      'use strict';
 
-      if (!$ || !$.fn || typeof $.fn.slick !== "function") {
-        console.error("Carousel dependencies could not be loaded. Check the network connection or CDN access.");
+      if (!$ || !$.fn || typeof $.fn.slick !== 'function') {
+        console.error('Carousel dependencies could not be loaded. Check the network connection or CDN access.');
         return;
       }
 
-      const $carousel = $(".hero-carousel");
-      const $toggle = $(".carousel-toggle");
-      const $status = $(".carousel-status");
-      const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
+      const $carousel = $('.hero-carousel');
+      const $toggle = $('.carousel-toggle');
+      const $status = $('.carousel-status');
+      const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
       const prefersReducedMotion = motionPreference.matches;
 
       const previousArrow = `
@@ -652,8 +678,8 @@
       function updateDotLabels(slick) {
         const slideCount = slick.slideCount;
 
-        $carousel.find(".slick-dots button").each(function (index) {
-          $(this).attr("aria-label", `Go to slide ${index + 1} of ${slideCount}`);
+        $carousel.find('.slick-dots button').each(function (index) {
+          $(this).attr('aria-label', `Go to slide ${index + 1} of ${slideCount}`);
         });
       }
 
@@ -662,27 +688,27 @@
       }
 
       function setToggleState(isPaused) {
-        $toggle.toggleClass("is-paused", isPaused).attr({
-          "aria-label": isPaused ? "Start carousel autoplay" : "Pause carousel autoplay",
-          "aria-pressed": isPaused ? "true" : "false"
+        $toggle.toggleClass('is-paused', isPaused).attr({
+          'aria-label': isPaused ? 'Start carousel autoplay' : 'Pause carousel autoplay',
+          'aria-pressed': isPaused ? 'true' : 'false',
         });
       }
 
       function revealInitialSlide() {
-        $carousel.addClass("motion-primed");
+        $carousel.addClass('motion-primed');
 
         // Two frames give the browser time to paint the prepared state before
         // animating the first slide into place.
         window.requestAnimationFrame(function () {
           window.requestAnimationFrame(function () {
-            $carousel.addClass("is-ready");
+            $carousel.addClass('is-ready');
           });
         });
       }
 
       $carousel
-        .addClass("hero-carousel--cinematic")
-        .on("init reInit", function (_event, slick) {
+        .addClass('hero-carousel--cinematic')
+        .on('init reInit', function (_event, slick) {
           updateStatus(slick.currentSlide, slick.slideCount);
           revealInitialSlide();
 
@@ -699,11 +725,11 @@
             setToggleState(true);
           }
         })
-        .on("beforeChange", function () {
-          $carousel.addClass("is-transitioning");
+        .on('beforeChange', function () {
+          $carousel.addClass('is-transitioning');
         })
-        .on("afterChange", function (_event, slick, currentSlide) {
-          $carousel.removeClass("is-transitioning");
+        .on('afterChange', function (_event, slick, currentSlide) {
+          $carousel.removeClass('is-transitioning');
           updateStatus(currentSlide, slick.slideCount);
         });
 
@@ -713,7 +739,7 @@
         arrows: true,
         autoplay: !prefersReducedMotion,
         autoplaySpeed: 10000,
-        cssEase: "cubic-bezier(0.22, 1, 0.36, 1)",
+        cssEase: 'cubic-bezier(0.22, 1, 0.36, 1)',
         dots: true,
         draggable: true,
         fade: true,
@@ -738,26 +764,25 @@
           {
             breakpoint: 768,
             settings: {
-              speed: prefersReducedMotion ? 0 : 850
-            }
-          }
-        ]
+              speed: prefersReducedMotion ? 0 : 850,
+            },
+          },
+        ],
       });
 
-      $toggle.on("click", function () {
-        const isPaused = $toggle.hasClass("is-paused");
+      $toggle.on('click', function () {
+        const isPaused = $toggle.hasClass('is-paused');
 
         if (isPaused) {
-          $carousel.slick("slickPlay");
+          $carousel.slick('slickPlay');
           setToggleState(false);
-          $status.text("Carousel autoplay started");
+          $status.text('Carousel autoplay started');
         } else {
-          $carousel.slick("slickPause");
+          $carousel.slick('slickPause');
           setToggleState(true);
-          $status.text("Carousel autoplay paused");
+          $status.text('Carousel autoplay paused');
         }
       });
     })(window.jQuery);
-
   });
 </script>
